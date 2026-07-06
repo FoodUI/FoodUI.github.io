@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FoodUI的Github小站</title>
-    <meta name="description" content="FoodUI 的个人主页 — 我的世界玩家，开源分享的小网站。">
+    <meta name="description" content="FoodUI 的个人主页 — 现代简约设计，轻量高效工具，开源共享。">
     <meta name="author" content="FoodUI">
+    <!-- 你可以替换为本地 favicon.png -->
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍜</text></svg>">
     <style>
         :root {
@@ -17,18 +18,22 @@
             --md-sys-color-on-secondary: #ffffff;
             --md-sys-color-secondary-container: #cfd8dc;
             --md-sys-color-on-secondary-container: #0a1c24;
-            --md-sys-color-surface: rgba(246, 250, 255, 0.85);
+            /* 卡片背景使用高透明度 + 毛玻璃 */
+            --card-bg: rgba(255, 255, 255, 0.25);
+            --card-border: rgba(255, 255, 255, 0.4);
+            --md-sys-color-surface: var(--card-bg);
             --md-sys-color-on-surface: #1a1c1e;
-            --md-sys-color-surface-variant: rgba(224, 227, 235, 0.7);
+            --md-sys-color-surface-variant: rgba(224, 227, 235, 0.3);
             --md-sys-color-on-surface-variant: #42474e;
             --md-sys-color-outline: #70757c;
             --md-sys-color-outline-variant: #c0c4cc;
             --md-sys-color-background: #f6faff;
             --md-sys-color-on-background: #1a1c1e;
-            --md-elevation-1: 0 1px 2px rgba(0,0,0,0.15), 0 1px 3px 1px rgba(0,0,0,0.05);
-            --md-elevation-2: 0 1px 2px rgba(0,0,0,0.15), 0 2px 6px 2px rgba(0,0,0,0.05);
+            --md-elevation-1: 0 8px 32px rgba(0,0,0,0.08);
+            --md-elevation-2: 0 12px 40px rgba(0,0,0,0.12);
             --md-shape-corner-full: 9999px;
             --transition: 0.25s cubic-bezier(0.2, 0, 0, 1);
+            --liquid-blur: 30px;
         }
 
         [data-theme="dark"] {
@@ -40,16 +45,18 @@
             --md-sys-color-on-secondary: #1c3138;
             --md-sys-color-secondary-container: #37474f;
             --md-sys-color-on-secondary-container: #cfd8dc;
-            --md-sys-color-surface: rgba(26, 28, 30, 0.85);
+            --card-bg: rgba(20, 20, 25, 0.35);
+            --card-border: rgba(255, 255, 255, 0.15);
+            --md-sys-color-surface: var(--card-bg);
             --md-sys-color-on-surface: #e2e2e6;
-            --md-sys-color-surface-variant: rgba(66, 71, 78, 0.7);
+            --md-sys-color-surface-variant: rgba(66, 71, 78, 0.4);
             --md-sys-color-on-surface-variant: #c0c4cc;
             --md-sys-color-outline: #8a8f94;
             --md-sys-color-outline-variant: #42474e;
             --md-sys-color-background: #1a1c1e;
             --md-sys-color-on-background: #e2e2e6;
-            --md-elevation-1: 0 1px 2px rgba(0,0,0,0.3), 0 1px 3px 1px rgba(0,0,0,0.15);
-            --md-elevation-2: 0 1px 2px rgba(0,0,0,0.3), 0 2px 6px 2px rgba(0,0,0,0.15);
+            --md-elevation-1: 0 8px 32px rgba(0,0,0,0.25);
+            --md-elevation-2: 0 12px 40px rgba(0,0,0,0.35);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -99,35 +106,40 @@
         }
         .top-bar button, .top-bar select {
             background: var(--md-sys-color-surface);
-            border: 1px solid var(--md-sys-color-outline-variant);
+            border: 1px solid var(--card-border);
             border-radius: var(--md-shape-corner-full);
             padding: 8px 16px;
             font-size: 0.85rem;
             cursor: pointer;
-            color: var(--md-sys-color-on-surface-variant);
+            color: var(--md-sys-color-on-surface);
             box-shadow: var(--md-elevation-1);
             transition: all var(--transition);
             backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             font-family: inherit;
         }
         .top-bar button:hover, .top-bar select:hover {
             background: var(--md-sys-color-surface-variant);
         }
 
-        .card {
-            background: var(--md-sys-color-surface);
-            border-radius: 24px;
+        /* Liquid Glass 卡片（仅用于介绍区） */
+        .liquid-glass-card {
+            background: var(--card-bg);
+            border-radius: 28px;
             box-shadow: var(--md-elevation-1);
-            border: 1px solid var(--md-sys-color-outline-variant);
-            transition: box-shadow var(--transition), background var(--transition);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--card-border);
+            backdrop-filter: blur(var(--liquid-blur));
+            -webkit-backdrop-filter: blur(var(--liquid-blur));
+            transition: all 0.4s cubic-bezier(0.2,0.8,0.4,1);
         }
-        .card:hover { box-shadow: var(--md-elevation-2); }
+        .liquid-glass-card:hover {
+            box-shadow: var(--md-elevation-2);
+            border-color: rgba(255,255,255,0.5);
+        }
 
         .hero { margin: 32px 0; }
         .hero-card {
-            padding: 32px;
+            padding: 36px;
             display: flex;
             flex-wrap: wrap;
             gap: 24px;
@@ -143,10 +155,12 @@
             font-weight: 500;
             flex-shrink: 0;
             overflow: hidden;
+            border: 3px solid rgba(255,255,255,0.5);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
         .avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
         .hero-text { flex: 1; min-width: 260px; }
-        .hero-text h1 { font-size: 2rem; font-weight: 600; letter-spacing: -0.02em; }
+        .hero-text h1 { font-size: 2rem; font-weight: 600; letter-spacing: -0.02em; color: var(--md-sys-color-on-surface); }
         .hero-text .tagline {
             font-size: 1rem;
             color: var(--md-sys-color-on-surface-variant);
@@ -177,6 +191,8 @@
             color: var(--md-sys-color-on-secondary-container);
             font-size: 0.85rem;
             font-weight: 500;
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
         }
         .social-links {
             display: flex; flex-wrap: wrap; gap: 12px; margin-top: 20px;
@@ -190,10 +206,17 @@
             text-decoration: none;
             font-size: 0.85rem;
             font-weight: 500;
-            transition: background var(--transition);
+            transition: background var(--transition), box-shadow var(--transition);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
         }
-        .social-link:hover { background: var(--md-sys-color-primary); color: var(--md-sys-color-on-primary); }
+        .social-link:hover {
+            background: var(--md-sys-color-primary);
+            color: var(--md-sys-color-on-primary);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
 
+        /* 仓库卡片继续使用普通卡片样式 */
         .repos-section { margin: 40px 0; }
         .section-title {
             font-size: 1.5rem;
@@ -210,11 +233,19 @@
             gap: 16px;
         }
         .repo-card {
+            background: var(--md-sys-color-surface);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 24px;
+            box-shadow: var(--md-elevation-1);
+            border: 1px solid var(--md-sys-color-outline-variant);
             padding: 20px;
             display: flex;
             flex-direction: column;
             gap: 12px;
+            transition: box-shadow var(--transition);
         }
+        .repo-card:hover { box-shadow: var(--md-elevation-2); }
         .repo-name {
             font-size: 1.1rem;
             font-weight: 600;
@@ -284,8 +315,9 @@
             <button id="themeToggle" aria-label="切换主题">🌓 <span id="themeLabel">切换深浅</span></button>
         </div>
 
+        <!-- 介绍区：使用 Liquid Glass 卡片 -->
         <section class="hero">
-            <div class="hero-card card">
+            <div class="hero-card liquid-glass-card">
                 <div class="avatar">
                     <img src="avatar.png" alt="FoodUI" onerror="this.style.display='none'; document.getElementById('avatarFallback').style.display='flex';">
                     <span id="avatarFallback" style="display:none; width:100%; height:100%; align-items:center; justify-content:center; font-size:2.5rem;">🍜</span>
@@ -341,7 +373,6 @@
 
     <script>
     (function() {
-        // 语言包
         const i18n = {
             zh: {
                 siteTitle: 'FoodUI的Github小站',
@@ -386,9 +417,7 @@
         };
 
         let currentLang = localStorage.getItem('foodui_lang') || 'zh';
-        function t(key) {
-            return (i18n[currentLang] && i18n[currentLang][key]) || key;
-        }
+        function t(key) { return (i18n[currentLang] && i18n[currentLang][key]) || key; }
 
         function applyLanguage() {
             document.documentElement.lang = currentLang === 'zh' ? 'zh-CN' : 'en';
@@ -408,26 +437,22 @@
             document.getElementById('reposTitle').textContent = t('reposTitle');
             document.getElementById('loadingText').textContent = t('loadingText');
             document.getElementById('footerText').innerHTML = t('footerText');
-            // 更新 GitHub 统计单位
             const statUnits = document.querySelectorAll('.stat-unit');
             if (statUnits.length >= 3) {
                 statUnits[0].textContent = t('statRepo');
                 statUnits[1].textContent = t('statFollowers');
                 statUnits[2].textContent = t('statFollowing');
             }
-            // 更新已渲染的仓库列表
             updateRepoTexts();
         }
 
         function updateRepoTexts() {
             const container = document.getElementById('reposContainer');
-            // 如果当前显示的是加载/错误/空状态，则更新对应文本
             if (container.querySelector('.loading')) {
                 container.querySelector('.loading').textContent = t('loadingText');
             } else if (container.querySelector('.error')) {
                 container.querySelector('.error').textContent = t('errorText');
             } else {
-                // 更新仓库卡片的描述和元数据？实际上仓库描述已经是动态的，只需更新“暂无描述”
                 const descs = container.querySelectorAll('.repo-desc');
                 descs.forEach(desc => {
                     if (desc.textContent === i18n.zh.noDesc || desc.textContent === i18n.en.noDesc) {
@@ -437,18 +462,15 @@
             }
         }
 
-        // 语言选择器
         const langSelect = document.getElementById('langSelect');
         langSelect.value = currentLang;
         langSelect.addEventListener('change', function() {
             currentLang = this.value;
             localStorage.setItem('foodui_lang', currentLang);
             applyLanguage();
-            // 重新获取仓库列表以更新文本
             fetchRepos();
         });
 
-        // 主题控制
         const systemDark = window.matchMedia('(prefers-color-scheme: dark)');
         const themeToggle = document.getElementById('themeToggle');
 
@@ -462,14 +484,8 @@
             }
         }
 
-        function getStoredTheme() {
-            return localStorage.getItem('foodui_theme') || 'auto';
-        }
-
-        function setTheme(mode) {
-            applyTheme(mode);
-            localStorage.setItem('foodui_theme', mode);
-        }
+        function getStoredTheme() { return localStorage.getItem('foodui_theme') || 'auto'; }
+        function setTheme(mode) { applyTheme(mode); localStorage.setItem('foodui_theme', mode); }
 
         const currentTheme = getStoredTheme();
         applyTheme(currentTheme);
@@ -479,28 +495,17 @@
 
         themeToggle.addEventListener('click', () => {
             const current = document.documentElement.getAttribute('data-theme');
-            const newTheme = current === 'dark' ? 'light' : 'dark';
-            setTheme(newTheme);
+            setTheme(current === 'dark' ? 'light' : 'dark');
         });
 
-        // 视频背景回退
         const bgVideo = document.getElementById('bgVideo');
         const bgGradient = document.getElementById('bgGradient');
-        bgVideo.addEventListener('loadeddata', () => {
-            bgGradient.style.display = 'none';
-        });
-        bgVideo.addEventListener('error', () => {
-            bgVideo.style.display = 'none';
-            bgGradient.style.display = 'block';
-        });
+        bgVideo.addEventListener('loadeddata', () => { bgGradient.style.display = 'none'; });
+        bgVideo.addEventListener('error', () => { bgVideo.style.display = 'none'; bgGradient.style.display = 'block'; });
         window.addEventListener('load', () => {
-            if (bgVideo.readyState < 2) {
-                bgVideo.style.display = 'none';
-                bgGradient.style.display = 'block';
-            }
+            if (bgVideo.readyState < 2) { bgVideo.style.display = 'none'; bgGradient.style.display = 'block'; }
         });
 
-        // 获取 GitHub 用户信息
         async function fetchGitHubProfile() {
             try {
                 const res = await fetch('https://api.github.com/users/FoodUI');
@@ -511,18 +516,15 @@
                     statNumbers[1].textContent = data.followers;
                     statNumbers[2].textContent = data.following;
                 }
-            } catch(e) {
-                console.error('GitHub 用户信息加载失败');
-            }
+            } catch(e) {}
         }
 
-        // 获取仓库列表
         async function fetchRepos() {
             const container = document.getElementById('reposContainer');
             container.innerHTML = `<div class="loading">${t('loadingText')}</div>`;
             try {
                 const res = await fetch('https://api.github.com/users/FoodUI/repos?sort=updated&per_page=100');
-                if (!res.ok) throw new Error('API 请求失败');
+                if (!res.ok) throw new Error();
                 const repos = await res.json();
                 const filtered = repos.filter(r => !r.fork && r.name !== 'FoodUI.github.io');
                 renderRepos(filtered);
@@ -533,16 +535,11 @@
 
         function renderRepos(repos) {
             const container = document.getElementById('reposContainer');
-            if (!repos.length) {
-                container.innerHTML = `<div class="loading">${t('noReposText')}</div>`;
-                return;
-            }
+            if (!repos.length) { container.innerHTML = `<div class="loading">${t('noReposText')}</div>`; return; }
             container.innerHTML = repos.map(repo => {
                 return `
-                <div class="repo-card card">
-                    <a href="${repo.html_url}" target="_blank" class="repo-name">
-                        📁 ${repo.name}
-                    </a>
+                <div class="repo-card">
+                    <a href="${repo.html_url}" target="_blank" class="repo-name">📁 ${repo.name}</a>
                     <div class="repo-desc">${repo.description || t('noDesc')}</div>
                     <div class="repo-meta">
                         ${repo.language ? `<span><span class="language-dot" style="background:${getLanguageColor(repo.language)}"></span> ${repo.language}</span>` : ''}
@@ -550,32 +547,20 @@
                         <span>🔄 ${repo.forks_count}</span>
                         <span>📅 ${new Date(repo.updated_at).toLocaleDateString(currentLang === 'zh' ? 'zh-CN' : 'en-US')}</span>
                     </div>
-                </div>
-                `;
+                </div>`;
             }).join('');
         }
 
         function getLanguageColor(lang) {
             const colors = {
-                'JavaScript': '#f7df1e',
-                'TypeScript': '#3178c6',
-                'Python': '#3572A5',
-                'Java': '#b07219',
-                'C++': '#f34b7d',
-                'C#': '#178600',
-                'Ruby': '#701516',
-                'Go': '#00ADD8',
-                'Swift': '#ffac45',
-                'Kotlin': '#A97BFF',
-                'Rust': '#dea584',
-                'Dart': '#00B4AB',
+                'JavaScript': '#f7df1e', 'TypeScript': '#3178c6', 'Python': '#3572A5',
+                'Java': '#b07219', 'C++': '#f34b7d', 'C#': '#178600', 'Ruby': '#701516',
+                'Go': '#00ADD8', 'Swift': '#ffac45', 'Kotlin': '#A97BFF', 'Rust': '#dea584', 'Dart': '#00B4AB',
             };
             return colors[lang] || '#858585';
         }
 
-        // 初始化语言
         applyLanguage();
-        // 初始加载
         fetchGitHubProfile();
         fetchRepos();
     })();
