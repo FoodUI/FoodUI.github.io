@@ -60,8 +60,32 @@
             line-height: 1.6;
             min-height: 100vh;
             transition: background 0.3s, color 0.3s;
+            position: relative;
+            overflow-x: hidden;
         }
-        .container { max-width: 960px; margin: 0 auto; padding: 0 20px; }
+
+        /* 动态背景层 */
+        .animated-bg {
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            z-index: -1;
+            background: 
+                radial-gradient(circle at 30% 40%, var(--md-sys-color-primary-container) 0%, transparent 30%),
+                radial-gradient(circle at 70% 60%, var(--md-sys-color-secondary-container) 0%, transparent 35%),
+                radial-gradient(circle at 50% 80%, var(--md-sys-color-surface-variant) 0%, transparent 40%);
+            animation: bgFloat 20s ease-in-out infinite alternate;
+        }
+        @keyframes bgFloat {
+            0% { transform: translate(0%, 0%) rotate(0deg) scale(1); }
+            33% { transform: translate(2%, -1%) rotate(1deg) scale(1.02); }
+            66% { transform: translate(-1%, 2%) rotate(-1deg) scale(0.98); }
+            100% { transform: translate(1%, -2%) rotate(0.5deg) scale(1.01); }
+        }
+
+        .container { max-width: 960px; margin: 0 auto; padding: 0 20px; position: relative; z-index: 1; }
 
         .theme-toggle {
             display: flex; justify-content: flex-end; padding: 20px 0 0;
@@ -87,6 +111,8 @@
             box-shadow: var(--md-elevation-1);
             border: 1px solid var(--md-sys-color-outline-variant);
             transition: box-shadow var(--transition), background var(--transition);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
         }
         .card:hover { box-shadow: var(--md-elevation-2); }
 
@@ -116,6 +142,19 @@
             font-size: 1rem;
             color: var(--md-sys-color-on-surface-variant);
             margin: 8px 0 16px;
+        }
+        .github-stats {
+            display: flex; flex-wrap: wrap; gap: 18px;
+            margin: 16px 0;
+            font-size: 0.9rem;
+        }
+        .github-stat {
+            display: flex; align-items: center; gap: 4px;
+            color: var(--md-sys-color-on-surface-variant);
+        }
+        .stat-number {
+            font-weight: 600;
+            color: var(--md-sys-color-primary);
         }
         .design-philosophy {
             display: flex; flex-wrap: wrap; gap: 12px;
@@ -216,10 +255,12 @@
             .hero-card { flex-direction: column; text-align: center; }
             .design-philosophy { justify-content: center; }
             .social-links { justify-content: center; }
+            .github-stats { justify-content: center; }
         }
     </style>
 </head>
 <body>
+<div class="animated-bg"></div>
 <div class="container">
     <div class="theme-toggle">
         <button id="themeToggle" aria-label="切换主题">🌓 切换深浅</button>
@@ -232,10 +273,16 @@
                 <span id="avatarFallback" style="display:none; width:100%; height:100%; align-items:center; justify-content:center; font-size:2.5rem;">🍜</span>
             </div>
             <div class="hero-text">
-                <h1>FoodUI的Github小站</h1>
+                <h1>FoodUI</h1>
                 <p class="tagline">
                     现代简约设计 · 轻量高效工具 · 开源共享
                 </p>
+                <!-- GitHub 信息将动态插入此处 -->
+                <div class="github-stats" id="githubStats">
+                    <span class="github-stat"><span class="stat-number">--</span> 仓库</span>
+                    <span class="github-stat"><span class="stat-number">--</span> 粉丝</span>
+                    <span class="github-stat"><span class="stat-number">--</span> 关注</span>
+                </div>
                 <div class="design-philosophy">
                     <span class="design-badge">✨ 现代简约</span>
                     <span class="design-badge">⚡ 轻量高效</span>
@@ -312,7 +359,23 @@
         setTheme(newTheme);
     });
 
-    // 获取仓库列表
+    // 获取 GitHub 用户信息并显示
+    async function fetchGitHubProfile() {
+        try {
+            const res = await fetch('https://api.github.com/users/FoodUI');
+            const data = await res.json();
+            const statsHtml = `
+                <span class="github-stat"><span class="stat-number">${data.public_repos}</span> 仓库</span>
+                <span class="github-stat"><span class="stat-number">${data.followers}</span> 粉丝</span>
+                <span class="github-stat"><span class="stat-number">${data.following}</span> 关注</span>
+            `;
+            document.getElementById('githubStats').innerHTML = statsHtml;
+        } catch(e) {
+            console.error('GitHub 用户信息加载失败');
+        }
+    }
+
+    // 获取仓库列表（使用原始 GitHub 仓库地址）
     async function fetchRepos() {
         const container = document.getElementById('reposContainer');
         try {
@@ -333,11 +396,9 @@
             return;
         }
         container.innerHTML = repos.map(repo => {
-            // 仓库的 GitHub Pages 网站链接
-            const siteUrl = `https://FoodUI.github.io/${repo.name}/`;
             return `
             <div class="repo-card card">
-                <a href="${siteUrl}" target="_blank" class="repo-name">
+                <a href="${repo.html_url}" target="_blank" class="repo-name">
                     📁 ${repo.name}
                 </a>
                 <div class="repo-desc">${repo.description || '暂无描述'}</div>
@@ -370,6 +431,8 @@
         return colors[lang] || '#858585';
     }
 
+    // 初始化加载
+    fetchGitHubProfile();
     fetchRepos();
 })();
 </script>
