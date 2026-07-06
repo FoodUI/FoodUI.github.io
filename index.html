@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FoodUI的Github小站</title>
-    <meta name="description" content="FoodUI 的个人主页 — 现代简约设计，轻量高效工具，开源共享。">
+    <meta name="description" content="FoodUI 的个人主页 — 我的世界玩家，尝试新奇事物。">
     <meta name="author" content="FoodUI">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍜</text></svg>">
     <style>
@@ -17,24 +17,27 @@
             --md-sys-color-on-secondary: #ffffff;
             --md-sys-color-secondary-container: #cfd8dc;
             --md-sys-color-on-secondary-container: #0a1c24;
-            /* 卡片背景透明度极高 */
-            --card-bg: rgba(255, 255, 255, 0.15);
-            --card-border: rgba(255, 255, 255, 0.5);
+            /* 极高透明度 – 视频背景几乎完全呈现 */
+            --card-bg: rgba(255, 255, 255, 0.06);
+            --card-border: rgba(255, 255, 255, 0.45);
             --md-sys-color-surface: var(--card-bg);
-            --md-sys-color-on-surface: #1a1c1e;
-            --md-sys-color-surface-variant: rgba(224, 227, 235, 0.2);
-            --md-sys-color-on-surface-variant: #42474e;
+            --md-sys-color-on-surface: #111111;
+            --md-sys-color-surface-variant: rgba(224, 227, 235, 0.15);
+            --md-sys-color-on-surface-variant: #333333;
             --md-sys-color-outline: #70757c;
             --md-sys-color-outline-variant: #c0c4cc;
             --md-sys-color-background: #f6faff;
             --md-sys-color-on-background: #1a1c1e;
             --liquid-blur: 40px;
-            --liquid-highlight: rgba(255,255,255,0.6);
-            --liquid-shadow-1: 0 20px 40px rgba(0,0,0,0.08);
-            --liquid-shadow-2: 0 0 0 1px rgba(255,255,255,0.5) inset;
-            --liquid-shadow-3: 0 0 20px rgba(255,255,255,0.3);
+            --liquid-highlight: rgba(255,255,255,0.7);
+            --liquid-shadow-1: 0 25px 50px rgba(0,0,0,0.1);
+            --liquid-shadow-2: 0 0 0 1px rgba(255,255,255,0.6) inset;
+            --liquid-shadow-3: 0 0 30px rgba(255,255,255,0.4);
             --md-shape-corner-full: 9999px;
             --transition: 0.25s cubic-bezier(0.2, 0, 0, 1);
+            /* 文字清晰度增强 */
+            --text-shadow-light: 0 1px 3px rgba(255,255,255,0.3);
+            --text-shadow-dark: 0 1px 3px rgba(0,0,0,0.2);
         }
 
         [data-theme="dark"] {
@@ -46,20 +49,22 @@
             --md-sys-color-on-secondary: #1c3138;
             --md-sys-color-secondary-container: #37474f;
             --md-sys-color-on-secondary-container: #cfd8dc;
-            --card-bg: rgba(20, 20, 25, 0.15);
-            --card-border: rgba(255, 255, 255, 0.15);
+            --card-bg: rgba(20, 20, 25, 0.08);
+            --card-border: rgba(255, 255, 255, 0.12);
             --md-sys-color-surface: var(--card-bg);
-            --md-sys-color-on-surface: #e2e2e6;
-            --md-sys-color-surface-variant: rgba(66, 71, 78, 0.3);
-            --md-sys-color-on-surface-variant: #c0c4cc;
+            --md-sys-color-on-surface: #f0f0f0;
+            --md-sys-color-surface-variant: rgba(66, 71, 78, 0.25);
+            --md-sys-color-on-surface-variant: #d0d0d0;
             --md-sys-color-outline: #8a8f94;
             --md-sys-color-outline-variant: #42474e;
             --md-sys-color-background: #1a1c1e;
             --md-sys-color-on-background: #e2e2e6;
-            --liquid-highlight: rgba(255,255,255,0.1);
-            --liquid-shadow-1: 0 20px 40px rgba(0,0,0,0.2);
-            --liquid-shadow-2: 0 0 0 1px rgba(255,255,255,0.1) inset;
-            --liquid-shadow-3: 0 0 20px rgba(255,255,255,0.05);
+            --liquid-highlight: rgba(255,255,255,0.12);
+            --liquid-shadow-1: 0 25px 50px rgba(0,0,0,0.3);
+            --liquid-shadow-2: 0 0 0 1px rgba(255,255,255,0.08) inset;
+            --liquid-shadow-3: 0 0 30px rgba(255,255,255,0.06);
+            --text-shadow-light: 0 1px 3px rgba(0,0,0,0.3);
+            --text-shadow-dark: 0 1px 3px rgba(255,255,255,0.2);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -125,7 +130,7 @@
             background: var(--md-sys-color-surface-variant);
         }
 
-        /* Liquid Glass 卡片 – 增强版 */
+        /* 超透液体玻璃卡片 */
         .liquid-glass-card {
             background: var(--card-bg);
             border-radius: 32px;
@@ -133,28 +138,27 @@
             backdrop-filter: blur(var(--liquid-blur));
             -webkit-backdrop-filter: blur(var(--liquid-blur));
             box-shadow: 
-                var(--liquid-shadow-2), /* 内高光边缘 */
-                var(--liquid-shadow-3), /* 外发光 */
-                var(--liquid-shadow-1); /* 浮动阴影 */
+                var(--liquid-shadow-2),
+                var(--liquid-shadow-3),
+                var(--liquid-shadow-1);
             transition: all 0.4s cubic-bezier(0.2,0.8,0.4,1);
             position: relative;
         }
-        /* 顶部高光伪元素（可选额外高光） */
         .liquid-glass-card::before {
             content: '';
             position: absolute;
             top: 0; left: 20px; right: 20px;
             height: 1px;
             background: linear-gradient(to right, transparent, var(--liquid-highlight), transparent);
-            opacity: 0.8;
+            opacity: 0.9;
             pointer-events: none;
         }
         .liquid-glass-card:hover {
-            border-color: rgba(255,255,255,0.7);
+            border-color: rgba(255,255,255,0.8);
             box-shadow: 
                 var(--liquid-shadow-2),
-                0 0 30px rgba(255,255,255,0.4),
-                0 25px 50px rgba(0,0,0,0.15);
+                0 0 40px rgba(255,255,255,0.5),
+                0 30px 60px rgba(0,0,0,0.2);
             transform: translateY(-2px);
         }
 
@@ -176,28 +180,36 @@
             font-weight: 500;
             flex-shrink: 0;
             overflow: hidden;
-            border: 2px solid rgba(255,255,255,0.6);
+            border: 2px solid rgba(255,255,255,0.7);
             box-shadow: 0 8px 20px rgba(0,0,0,0.1);
         }
         .avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
         .hero-text { flex: 1; min-width: 260px; }
-        .hero-text h1 { font-size: 2rem; font-weight: 600; letter-spacing: -0.02em; color: var(--md-sys-color-on-surface); }
+        .hero-text h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            color: var(--md-sys-color-on-surface);
+            text-shadow: var(--text-shadow-light);
+        }
         .hero-text .tagline {
-            font-size: 1rem;
+            font-size: 1.05rem;
             color: var(--md-sys-color-on-surface-variant);
             margin: 8px 0 16px;
+            font-weight: 500;
+            text-shadow: var(--text-shadow-light);
         }
         .github-stats {
             display: flex; flex-wrap: wrap; gap: 18px;
             margin: 16px 0;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
         }
         .github-stat {
             display: flex; align-items: center; gap: 4px;
             color: var(--md-sys-color-on-surface-variant);
         }
         .stat-number {
-            font-weight: 600;
+            font-weight: 700;
             color: var(--md-sys-color-primary);
         }
         .design-philosophy {
@@ -211,7 +223,7 @@
             background: var(--md-sys-color-secondary-container);
             color: var(--md-sys-color-on-secondary-container);
             font-size: 0.85rem;
-            font-weight: 500;
+            font-weight: 600;
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
         }
@@ -226,7 +238,7 @@
             color: var(--md-sys-color-on-primary-container);
             text-decoration: none;
             font-size: 0.85rem;
-            font-weight: 500;
+            font-weight: 600;
             transition: background var(--transition), box-shadow var(--transition);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
@@ -234,18 +246,19 @@
         .social-link:hover {
             background: var(--md-sys-color-primary);
             color: var(--md-sys-color-on-primary);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
         }
 
         .repos-section { margin: 40px 0; }
         .section-title {
             font-size: 1.5rem;
-            font-weight: 600;
+            font-weight: 700;
             margin-bottom: 20px;
             display: flex;
             align-items: center;
             gap: 10px;
             color: var(--md-sys-color-on-surface);
+            text-shadow: var(--text-shadow-light);
         }
         .repos-grid {
             display: grid;
@@ -254,8 +267,8 @@
         }
         .repo-card {
             background: var(--md-sys-color-surface);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
             border-radius: 24px;
             box-shadow: var(--liquid-shadow-1);
             border: 1px solid var(--md-sys-color-outline-variant);
@@ -265,10 +278,10 @@
             gap: 12px;
             transition: box-shadow var(--transition);
         }
-        .repo-card:hover { box-shadow: var(--liquid-shadow-1), 0 10px 30px rgba(0,0,0,0.1); }
+        .repo-card:hover { box-shadow: var(--liquid-shadow-1), 0 10px 30px rgba(0,0,0,0.15); }
         .repo-name {
             font-size: 1.1rem;
-            font-weight: 600;
+            font-weight: 700;
             color: var(--md-sys-color-primary);
             text-decoration: none;
             display: inline-flex;
@@ -309,6 +322,7 @@
             text-align: center; padding: 32px;
             color: var(--md-sys-color-on-surface-variant);
             font-size: 0.8rem;
+            text-shadow: var(--text-shadow-light);
         }
         .footer a { color: var(--md-sys-color-primary); }
 
@@ -342,10 +356,8 @@
                     <span id="avatarFallback" style="display:none; width:100%; height:100%; align-items:center; justify-content:center; font-size:2.5rem;">🍜</span>
                 </div>
                 <div class="hero-text">
-                    <h1 id="siteTitle">FoodUI</h1>
-                    <p class="tagline" id="tagline">
-                        我的世界玩家，尝试新奇事物
-                    </p>
+                    <h1>FoodUI</h1>
+                    <p class="tagline" id="tagline">我的世界玩家，尝试新奇事物</p>
                     <div class="github-stats" id="githubStats">
                         <span class="github-stat"><span class="stat-number">--</span> <span class="stat-unit">仓库</span></span>
                         <span class="github-stat"><span class="stat-number">--</span> <span class="stat-unit">粉丝</span></span>
@@ -395,7 +407,7 @@
         const i18n = {
             zh: {
                 siteTitle: 'FoodUI的Github小站',
-                tagline: '现代简约设计 · 轻量高效工具 · 开源共享',
+                tagline: '我的世界玩家，尝试新奇事物',
                 themeLabel: '切换深浅',
                 badge1: '✨ 现代简约',
                 badge2: '⚡ 轻量高效',
@@ -415,7 +427,7 @@
             },
             en: {
                 siteTitle: "FoodUI's GitHub Site",
-                tagline: 'Modern Minimalist Design · Lightweight & Efficient Tools · Open Source Sharing',
+                tagline: 'Minecraft player, exploring novel things.',
                 themeLabel: 'Toggle Theme',
                 badge1: '✨ Modern Minimalist',
                 badge2: '⚡ Lightweight & Efficient',
@@ -441,7 +453,6 @@
         function applyLanguage() {
             document.documentElement.lang = currentLang === 'zh' ? 'zh-CN' : 'en';
             document.title = t('siteTitle');
-            document.getElementById('siteTitle').textContent = t('siteTitle');
             document.getElementById('tagline').textContent = t('tagline');
             document.getElementById('themeLabel').textContent = t('themeLabel');
             document.getElementById('badge1').textContent = t('badge1');
