@@ -17,27 +17,26 @@
             --md-sys-color-on-secondary: #ffffff;
             --md-sys-color-secondary-container: #cfd8dc;
             --md-sys-color-on-secondary-container: #0a1c24;
-            /* 极高透明度 – 视频背景几乎完全呈现 */
-            --card-bg: rgba(255, 255, 255, 0.06);
-            --card-border: rgba(255, 255, 255, 0.45);
+            /* 介绍卡片完全透明，视频背景直接穿透 */
+            --card-bg: transparent;
+            --card-border: rgba(255, 255, 255, 0.25);
             --md-sys-color-surface: var(--card-bg);
-            --md-sys-color-on-surface: #111111;
-            --md-sys-color-surface-variant: rgba(224, 227, 235, 0.15);
-            --md-sys-color-on-surface-variant: #333333;
+            --md-sys-color-on-surface: #ffffff;
+            --md-sys-color-surface-variant: rgba(224, 227, 235, 0.1);
+            --md-sys-color-on-surface-variant: #f0f0f0;
             --md-sys-color-outline: #70757c;
-            --md-sys-color-outline-variant: #c0c4cc;
+            --md-sys-color-outline-variant: rgba(255,255,255,0.3);
             --md-sys-color-background: #f6faff;
             --md-sys-color-on-background: #1a1c1e;
-            --liquid-blur: 40px;
-            --liquid-highlight: rgba(255,255,255,0.7);
-            --liquid-shadow-1: 0 25px 50px rgba(0,0,0,0.1);
-            --liquid-shadow-2: 0 0 0 1px rgba(255,255,255,0.6) inset;
-            --liquid-shadow-3: 0 0 30px rgba(255,255,255,0.4);
+            --liquid-blur: 0px;
+            --liquid-highlight: rgba(255,255,255,0.5);
+            --liquid-shadow-1: 0 10px 30px rgba(0,0,0,0.15);
+            --liquid-shadow-2: 0 0 0 1px rgba(255,255,255,0.2) inset;
+            --liquid-shadow-3: 0 0 20px rgba(255,255,255,0.2);
             --md-shape-corner-full: 9999px;
             --transition: 0.25s cubic-bezier(0.2, 0, 0, 1);
-            /* 文字清晰度增强 */
-            --text-shadow-light: 0 1px 3px rgba(255,255,255,0.3);
-            --text-shadow-dark: 0 1px 3px rgba(0,0,0,0.2);
+            --text-shadow-light: 0 1px 6px rgba(0,0,0,0.6);
+            --text-shadow-dark: 0 1px 6px rgba(0,0,0,0.6);
         }
 
         [data-theme="dark"] {
@@ -49,22 +48,20 @@
             --md-sys-color-on-secondary: #1c3138;
             --md-sys-color-secondary-container: #37474f;
             --md-sys-color-on-secondary-container: #cfd8dc;
-            --card-bg: rgba(20, 20, 25, 0.08);
+            --card-bg: transparent;
             --card-border: rgba(255, 255, 255, 0.12);
             --md-sys-color-surface: var(--card-bg);
-            --md-sys-color-on-surface: #f0f0f0;
-            --md-sys-color-surface-variant: rgba(66, 71, 78, 0.25);
-            --md-sys-color-on-surface-variant: #d0d0d0;
+            --md-sys-color-on-surface: #ffffff;
+            --md-sys-color-surface-variant: rgba(66, 71, 78, 0.15);
+            --md-sys-color-on-surface-variant: #e0e0e0;
             --md-sys-color-outline: #8a8f94;
-            --md-sys-color-outline-variant: #42474e;
+            --md-sys-color-outline-variant: rgba(255,255,255,0.1);
             --md-sys-color-background: #1a1c1e;
             --md-sys-color-on-background: #e2e2e6;
-            --liquid-highlight: rgba(255,255,255,0.12);
-            --liquid-shadow-1: 0 25px 50px rgba(0,0,0,0.3);
+            --liquid-highlight: rgba(255,255,255,0.08);
+            --liquid-shadow-1: 0 10px 30px rgba(0,0,0,0.3);
             --liquid-shadow-2: 0 0 0 1px rgba(255,255,255,0.08) inset;
-            --liquid-shadow-3: 0 0 30px rgba(255,255,255,0.06);
-            --text-shadow-light: 0 1px 3px rgba(0,0,0,0.3);
-            --text-shadow-dark: 0 1px 3px rgba(255,255,255,0.2);
+            --liquid-shadow-3: 0 0 20px rgba(255,255,255,0.04);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -113,7 +110,7 @@
             display: flex; justify-content: flex-end; gap: 12px; padding: 20px 0 0;
         }
         .top-bar button, .top-bar select {
-            background: var(--md-sys-color-surface);
+            background: rgba(255,255,255,0.15);
             border: 1px solid var(--card-border);
             border-radius: var(--md-shape-corner-full);
             padding: 8px 16px;
@@ -122,21 +119,21 @@
             color: var(--md-sys-color-on-surface);
             box-shadow: var(--liquid-shadow-1);
             transition: all var(--transition);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
             font-family: inherit;
         }
         .top-bar button:hover, .top-bar select:hover {
-            background: var(--md-sys-color-surface-variant);
+            background: rgba(255,255,255,0.25);
         }
 
-        /* 超透液体玻璃卡片 */
+        /* 完全透明介绍卡片 */
         .liquid-glass-card {
-            background: var(--card-bg);
+            background: transparent;
             border-radius: 32px;
             border: 1px solid var(--card-border);
-            backdrop-filter: blur(var(--liquid-blur));
-            -webkit-backdrop-filter: blur(var(--liquid-blur));
+            backdrop-filter: none;
+            -webkit-backdrop-filter: none;
             box-shadow: 
                 var(--liquid-shadow-2),
                 var(--liquid-shadow-3),
@@ -145,21 +142,14 @@
             position: relative;
         }
         .liquid-glass-card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 20px; right: 20px;
-            height: 1px;
-            background: linear-gradient(to right, transparent, var(--liquid-highlight), transparent);
-            opacity: 0.9;
-            pointer-events: none;
+            display: none; /* 移除顶部高光 */
         }
         .liquid-glass-card:hover {
-            border-color: rgba(255,255,255,0.8);
+            border-color: rgba(255,255,255,0.5);
             box-shadow: 
                 var(--liquid-shadow-2),
-                0 0 40px rgba(255,255,255,0.5),
-                0 30px 60px rgba(0,0,0,0.2);
-            transform: translateY(-2px);
+                0 0 30px rgba(255,255,255,0.3),
+                0 20px 40px rgba(0,0,0,0.25);
         }
 
         .hero { margin: 32px 0; }
@@ -173,15 +163,15 @@
         .avatar {
             width: 96px; height: 96px;
             border-radius: 50%;
-            background: var(--md-sys-color-primary-container);
-            color: var(--md-sys-color-on-primary-container);
+            background: rgba(255,255,255,0.2);
+            color: #fff;
             display: flex; align-items: center; justify-content: center;
             font-size: 2.5rem;
             font-weight: 500;
             flex-shrink: 0;
             overflow: hidden;
             border: 2px solid rgba(255,255,255,0.7);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
         }
         .avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
         .hero-text { flex: 1; min-width: 260px; }
@@ -189,12 +179,12 @@
             font-size: 2.2rem;
             font-weight: 700;
             letter-spacing: -0.02em;
-            color: var(--md-sys-color-on-surface);
+            color: #ffffff;
             text-shadow: var(--text-shadow-light);
         }
         .hero-text .tagline {
             font-size: 1.05rem;
-            color: var(--md-sys-color-on-surface-variant);
+            color: #ffffff;
             margin: 8px 0 16px;
             font-weight: 500;
             text-shadow: var(--text-shadow-light);
@@ -206,11 +196,13 @@
         }
         .github-stat {
             display: flex; align-items: center; gap: 4px;
-            color: var(--md-sys-color-on-surface-variant);
+            color: #ffffff;
+            text-shadow: var(--text-shadow-light);
         }
         .stat-number {
             font-weight: 700;
             color: var(--md-sys-color-primary);
+            text-shadow: 0 1px 4px rgba(0,0,0,0.5);
         }
         .design-philosophy {
             display: flex; flex-wrap: wrap; gap: 12px;
@@ -220,12 +212,13 @@
             display: inline-flex; align-items: center; gap: 6px;
             padding: 8px 18px;
             border-radius: var(--md-shape-corner-full);
-            background: var(--md-sys-color-secondary-container);
-            color: var(--md-sys-color-on-secondary-container);
+            background: rgba(255,255,255,0.15);
+            color: #ffffff;
             font-size: 0.85rem;
             font-weight: 600;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            text-shadow: var(--text-shadow-light);
         }
         .social-links {
             display: flex; flex-wrap: wrap; gap: 12px; margin-top: 20px;
@@ -234,19 +227,20 @@
             display: inline-flex; align-items: center; gap: 6px;
             padding: 8px 18px;
             border-radius: var(--md-shape-corner-full);
-            background: var(--md-sys-color-primary-container);
-            color: var(--md-sys-color-on-primary-container);
+            background: rgba(0,102,255,0.3);
+            color: #ffffff;
             text-decoration: none;
             font-size: 0.85rem;
             font-weight: 600;
             transition: background var(--transition), box-shadow var(--transition);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            text-shadow: var(--text-shadow-light);
         }
         .social-link:hover {
             background: var(--md-sys-color-primary);
-            color: var(--md-sys-color-on-primary);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            color: #fff;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
         }
 
         .repos-section { margin: 40px 0; }
@@ -257,7 +251,7 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            color: var(--md-sys-color-on-surface);
+            color: #ffffff;
             text-shadow: var(--text-shadow-light);
         }
         .repos-grid {
@@ -266,19 +260,19 @@
             gap: 16px;
         }
         .repo-card {
-            background: var(--md-sys-color-surface);
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
             border-radius: 24px;
             box-shadow: var(--liquid-shadow-1);
-            border: 1px solid var(--md-sys-color-outline-variant);
+            border: 1px solid rgba(255,255,255,0.2);
             padding: 20px;
             display: flex;
             flex-direction: column;
             gap: 12px;
             transition: box-shadow var(--transition);
         }
-        .repo-card:hover { box-shadow: var(--liquid-shadow-1), 0 10px 30px rgba(0,0,0,0.15); }
+        .repo-card:hover { box-shadow: var(--liquid-shadow-1), 0 10px 30px rgba(0,0,0,0.3); }
         .repo-name {
             font-size: 1.1rem;
             font-weight: 700;
@@ -291,16 +285,18 @@
         .repo-name:hover { text-decoration: underline; }
         .repo-desc {
             font-size: 0.85rem;
-            color: var(--md-sys-color-on-surface-variant);
+            color: #ffffff;
             line-height: 1.5;
             flex: 1;
+            text-shadow: var(--text-shadow-light);
         }
         .repo-meta {
             display: flex;
             flex-wrap: wrap;
             gap: 12px;
             font-size: 0.75rem;
-            color: var(--md-sys-color-on-surface-variant);
+            color: #ffffff;
+            text-shadow: var(--text-shadow-light);
         }
         .repo-meta span {
             display: inline-flex;
@@ -315,12 +311,13 @@
 
         .loading, .error {
             text-align: center; padding: 32px;
-            color: var(--md-sys-color-on-surface-variant);
+            color: #ffffff;
+            text-shadow: var(--text-shadow-light);
         }
 
         .footer {
             text-align: center; padding: 32px;
-            color: var(--md-sys-color-on-surface-variant);
+            color: #ffffff;
             font-size: 0.8rem;
             text-shadow: var(--text-shadow-light);
         }
