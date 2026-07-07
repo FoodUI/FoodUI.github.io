@@ -34,21 +34,13 @@
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
             font-family: var(--font);
-            background-color: #F3F3F3;
             color: var(--text-color);
             line-height: 1.6;
             min-height: 100vh;
             transition: background 0.3s, color 0.3s;
             position: relative;
             overflow-x: hidden;
-        }
-
-        /* 网格背景 (浅色) 或深色纯色 */
-        body::before {
-            content: '';
-            position: fixed;
-            inset: 0;
-            z-index: -2;
+            /* 保留网格背景作为回退层 */
             background-color: #F3F3F3;
             background-image:
                 linear-gradient(0deg, transparent 24%, #dbdbdb 25%, #dbdbdb 26%, transparent 27%, transparent 74%, #dbdbdb 75%, #dbdbdb 76%, transparent 77%, transparent),
@@ -56,9 +48,28 @@
             background-size: 50px 50px;
         }
 
-        [data-theme="dark"] body::before {
+        [data-theme="dark"] body {
             background: #1c1c1e;
             background-image: none;
+        }
+
+        /* ========== 视频背景层（新增） ========== */
+        .video-bg-layer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+            /* 在网格背景之上，内容之下 */
+            opacity: 1;
+            transition: opacity 0.5s ease;
+        }
+        /* 当视频加载失败时，自动隐藏以显示网格背景 */
+        .video-bg-layer.hidden {
+            opacity: 0;
+            pointer-events: none;
         }
 
         .container { max-width: 960px; margin: 0 auto; padding: 0 20px; position: relative; z-index: 1; }
@@ -242,6 +253,11 @@
     </style>
 </head>
 <body>
+    <!-- 视频背景（新增，静音循环播放） -->
+    <video class="video-bg-layer" id="bgVideo" autoplay muted loop playsinline>
+        <source src="background.mp4" type="video/mp4">
+    </video>
+
     <div class="container">
         <div class="top-bar">
             <select id="langSelect" class="top-btn">
@@ -437,6 +453,34 @@
                     </div>
                 </div>`;
             }).join('');
+        }
+
+        // 视频背景回退逻辑（新增）
+        const video = document.getElementById('bgVideo');
+        if (video) {
+            video.addEventListener('loadeddata', function() {
+                if (video.videoWidth > 0 && video.videoHeight > 0) {
+                    video.classList.remove('hidden');
+                } else {
+                    video.classList.add('hidden');
+                }
+            });
+            video.addEventListener('error', function() {
+                video.classList.add('hidden');
+            });
+            // 初始检查
+            if (video.readyState >= 2) {
+                if (video.videoWidth === 0 && video.videoHeight === 0) {
+                    video.classList.add('hidden');
+                }
+            } else {
+                // 等待一段时间后检查
+                setTimeout(function() {
+                    if (video.readyState < 2 || (video.videoWidth === 0 && video.videoHeight === 0)) {
+                        video.classList.add('hidden');
+                    }
+                }, 3000);
+            }
         }
 
         applyLang();
