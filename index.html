@@ -9,65 +9,59 @@
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍜</text></svg>">
     <style>
         :root {
-            --md-sys-color-primary: #0066ff;
-            --md-sys-color-on-primary: #ffffff;
-            --md-sys-color-primary-container: #dceeff;
-            --md-sys-color-on-primary-container: #001b3d;
-            --md-sys-color-secondary: #546e7a;
-            --md-sys-color-on-secondary: #ffffff;
-            --md-sys-color-secondary-container: #cfd8dc;
-            --md-sys-color-on-secondary-container: #0a1c24;
-            --card-bg: rgba(255, 255, 255, 0.2);
-            --card-border: rgba(255, 255, 255, 0.3);
-            --md-sys-color-surface: var(--card-bg);
-            --md-sys-color-on-surface: #1a1c1e;
-            --md-sys-color-surface-variant: rgba(224, 227, 235, 0.3);
-            --md-sys-color-on-surface-variant: #2d2d2d;
-            --md-sys-color-outline: #70757c;
-            --md-sys-color-outline-variant: rgba(255,255,255,0.4);
-            --md-sys-color-background: #f6faff;
-            --md-sys-color-on-background: #1a1c1e;
-            --liquid-blur: 25px;
-            --liquid-highlight: rgba(255,255,255,0.5);
-            --liquid-shadow-1: 0 10px 30px rgba(0,0,0,0.1);
-            --liquid-shadow-2: 0 0 0 1px rgba(255,255,255,0.3) inset;
-            --liquid-shadow-3: 0 0 20px rgba(255,255,255,0.2);
-            --md-shape-corner-full: 9999px;
-            --transition: 0.25s cubic-bezier(0.2, 0, 0, 1);
-            --text-shadow-light: 0 1px 4px rgba(0,0,0,0.2);
+            --primary: #0066ff;
+            --on-primary: #ffffff;
+            --primary-container: #dceeff;
+            --on-primary-container: #001b3d;
+            --secondary: #546e7a;
+            --secondary-container: #cfd8dc;
+            --on-secondary-container: #0a1c24;
+            --surface: #f6faff;
+            --on-surface: #ffffff;
+            --surface-variant: rgba(224, 227, 235, 0.05);
+            --on-surface-variant: #f0f0f0;
+            --outline: #70757c;
+            --outline-variant: rgba(255,255,255,0.15);
+            --background: #f6faff;
+            --on-background: #1a1c1e;
+            /* 极致高透玻璃 */
+            --glass-bg: rgba(255, 255, 255, 0.06);
+            --glass-border: rgba(255, 255, 255, 0.15);
+            --glass-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            --text-shadow: 0 1px 8px rgba(0,0,0,0.7);
+            --radius-full: 9999px;
+            --radius-lg: 28px;
+            --transition: 0.25s cubic-bezier(0.2,0,0,1);
+            --font: 'Google Sans', 'PingFang SC', 'Microsoft YaHei', sans-serif;
         }
 
         [data-theme="dark"] {
-            --md-sys-color-primary: #80bfff;
-            --md-sys-color-on-primary: #003166;
-            --md-sys-color-primary-container: #004899;
-            --md-sys-color-on-primary-container: #dceeff;
-            --md-sys-color-secondary: #b0bec5;
-            --md-sys-color-on-secondary: #1c3138;
-            --md-sys-color-secondary-container: #37474f;
-            --md-sys-color-on-secondary-container: #cfd8dc;
-            --card-bg: rgba(20, 20, 25, 0.3);
-            --card-border: rgba(255, 255, 255, 0.15);
-            --md-sys-color-surface: var(--card-bg);
-            --md-sys-color-on-surface: #ffffff;
-            --md-sys-color-surface-variant: rgba(66, 71, 78, 0.4);
-            --md-sys-color-on-surface-variant: #e0e0e0;
-            --md-sys-color-outline: #8a8f94;
-            --md-sys-color-outline-variant: rgba(255,255,255,0.2);
-            --md-sys-color-background: #1a1c1e;
-            --md-sys-color-on-background: #e2e2e6;
-            --liquid-highlight: rgba(255,255,255,0.1);
-            --liquid-shadow-1: 0 10px 30px rgba(0,0,0,0.3);
-            --liquid-shadow-2: 0 0 0 1px rgba(255,255,255,0.1) inset;
-            --liquid-shadow-3: 0 0 20px rgba(255,255,255,0.05);
-            --text-shadow-light: 0 1px 4px rgba(0,0,0,0.5);
+            --primary: #80bfff;
+            --on-primary: #003166;
+            --primary-container: #004899;
+            --on-primary-container: #dceeff;
+            --secondary: #b0bec5;
+            --secondary-container: #37474f;
+            --on-secondary-container: #cfd8dc;
+            --surface: #1a1c1e;
+            --on-surface: #ffffff;
+            --surface-variant: rgba(66, 71, 78, 0.05);
+            --on-surface-variant: #e0e0e0;
+            --outline: #8a8f94;
+            --outline-variant: rgba(255,255,255,0.08);
+            --background: #1a1c1e;
+            --on-background: #e2e2e6;
+            --glass-bg: rgba(20, 20, 25, 0.06);
+            --glass-border: rgba(255,255,255,0.08);
+            --glass-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            --text-shadow: 0 1px 8px rgba(0,0,0,0.8);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
-            font-family: 'Google Sans', 'PingFang SC', 'Microsoft YaHei', sans-serif;
-            background: var(--md-sys-color-background);
-            color: var(--md-sys-color-on-background);
+            font-family: var(--font);
+            background: var(--background);
+            color: var(--on-background);
             line-height: 1.6;
             min-height: 100vh;
             transition: background 0.3s, color 0.3s;
@@ -75,32 +69,22 @@
             overflow-x: hidden;
         }
 
-        .video-background {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            z-index: -2;
+        .video-bg {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            object-fit: cover; z-index: -2;
         }
-        .gradient-background {
-            position: fixed;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            z-index: -3;
-            background: 
-                radial-gradient(circle at 30% 40%, var(--md-sys-color-primary-container) 0%, transparent 30%),
-                radial-gradient(circle at 70% 60%, var(--md-sys-color-secondary-container) 0%, transparent 35%),
-                radial-gradient(circle at 50% 80%, var(--md-sys-color-surface-variant) 0%, transparent 40%);
+        .gradient-bg {
+            position: fixed; top: -50%; left: -50%; width: 200%; height: 200%; z-index: -3;
+            background: radial-gradient(circle at 30% 40%, var(--primary-container) 0%, transparent 30%),
+                        radial-gradient(circle at 70% 60%, var(--secondary-container) 0%, transparent 35%),
+                        radial-gradient(circle at 50% 80%, var(--surface-variant) 0%, transparent 40%);
             animation: bgFloat 20s ease-in-out infinite alternate;
         }
         @keyframes bgFloat {
-            0% { transform: translate(0%, 0%) rotate(0deg) scale(1); }
-            33% { transform: translate(2%, -1%) rotate(1deg) scale(1.02); }
-            66% { transform: translate(-1%, 2%) rotate(-1deg) scale(0.98); }
-            100% { transform: translate(1%, -2%) rotate(0.5deg) scale(1.01); }
+            0% { transform: translate(0,0) rotate(0deg) scale(1); }
+            33% { transform: translate(2%,-1%) rotate(1deg) scale(1.02); }
+            66% { transform: translate(-1%,2%) rotate(-1deg) scale(0.98); }
+            100% { transform: translate(1%,-2%) rotate(0.5deg) scale(1.01); }
         }
 
         .container { max-width: 960px; margin: 0 auto; padding: 0 20px; position: relative; z-index: 1; }
@@ -108,260 +92,91 @@
         .top-bar {
             display: flex; justify-content: flex-end; gap: 12px; padding: 20px 0 0;
         }
-        .top-bar button, .top-bar select {
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-radius: var(--md-shape-corner-full);
-            padding: 8px 16px;
-            font-size: 0.85rem;
-            cursor: pointer;
-            color: var(--md-sys-color-on-surface);
-            box-shadow: var(--liquid-shadow-1);
-            transition: all var(--transition);
-            backdrop-filter: blur(var(--liquid-blur));
-            -webkit-backdrop-filter: blur(var(--liquid-blur));
+        .top-btn {
+            background: var(--glass-bg); border: 1px solid var(--glass-border);
+            border-radius: var(--radius-full); padding: 8px 16px; font-size: 0.85rem;
+            cursor: pointer; color: var(--on-surface); box-shadow: var(--glass-shadow);
+            transition: all var(--transition); backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px);
             font-family: inherit;
         }
-        .top-bar button:hover, .top-bar select:hover {
-            background: rgba(255,255,255,0.3);
-        }
+        .top-btn:hover { background: rgba(255,255,255,0.1); }
 
-        .liquid-glass-card {
-            background: var(--card-bg);
-            border-radius: 32px;
-            border: 1px solid var(--card-border);
-            backdrop-filter: blur(var(--liquid-blur));
-            -webkit-backdrop-filter: blur(var(--liquid-blur));
-            box-shadow: 
-                var(--liquid-shadow-2),
-                var(--liquid-shadow-3),
-                var(--liquid-shadow-1);
+        .glass {
+            background: var(--glass-bg); border-radius: var(--radius-lg);
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 0 0 1px rgba(255,255,255,0.08) inset, 0 0 15px rgba(255,255,255,0.05), var(--glass-shadow);
             transition: all 0.4s cubic-bezier(0.2,0.8,0.4,1);
-            position: relative;
-            overflow: hidden;
         }
-        .liquid-glass-card:hover {
-            border-color: rgba(255,255,255,0.5);
-            box-shadow: 
-                var(--liquid-shadow-2),
-                0 0 30px rgba(255,255,255,0.3),
-                0 20px 40px rgba(0,0,0,0.15);
+        .glass:hover {
+            border-color: rgba(255,255,255,0.2);
+            box-shadow: 0 0 20px rgba(255,255,255,0.1), 0 15px 30px rgba(0,0,0,0.1);
         }
 
         .hero { margin: 32px 0; }
         .hero-card {
-            padding: 36px;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 24px;
-            align-items: center;
+            padding: 32px; display: flex; flex-wrap: wrap; gap: 24px; align-items: center;
         }
         .avatar {
-            width: 96px; height: 96px;
-            border-radius: 50%;
-            background: var(--md-sys-color-primary-container);
-            color: var(--md-sys-color-on-primary-container);
-            display: flex; align-items: center; justify-content: center;
-            font-size: 2.5rem;
-            font-weight: 500;
-            flex-shrink: 0;
-            overflow: hidden;
-            border: 2px solid rgba(255,255,255,0.6);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            width: 96px; height: 96px; border-radius: 50%; background: var(--primary-container);
+            color: var(--on-primary-container); display: flex; align-items: center; justify-content: center;
+            font-size: 2.5rem; font-weight: 500; flex-shrink: 0; overflow: hidden;
+            border: 2px solid rgba(255,255,255,0.4); box-shadow: 0 8px 20px rgba(0,0,0,0.1);
         }
         .avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
         .hero-text { flex: 1; min-width: 260px; }
-        .hero-text h1 {
-            font-size: 2.2rem;
-            font-weight: 700;
-            letter-spacing: -0.02em;
-            color: var(--md-sys-color-on-surface);
-            text-shadow: var(--text-shadow-light);
-        }
-        .hero-text .tagline {
-            font-size: 1.05rem;
-            color: var(--md-sys-color-on-surface-variant);
-            margin: 8px 0 16px;
-            font-weight: 500;
-        }
-        .github-stats {
-            display: flex; flex-wrap: wrap; gap: 18px;
-            margin: 16px 0;
-            font-size: 0.95rem;
-        }
-        .github-stat {
-            display: flex; align-items: center; gap: 4px;
-            color: var(--md-sys-color-on-surface-variant);
-        }
-        .stat-number {
-            font-weight: 700;
-            color: var(--md-sys-color-primary);
-            text-shadow: 0 1px 4px rgba(0,0,0,0.5);
-        }
-        .design-philosophy {
-            display: flex; flex-wrap: wrap; gap: 12px;
-            margin-top: 16px;
-        }
+        .hero-text h1 { font-size: 2rem; font-weight: 700; color: var(--on-surface); text-shadow: var(--text-shadow); }
+        .hero-text .tagline { font-size: 1rem; color: var(--on-surface-variant); margin: 8px 0 16px; text-shadow: var(--text-shadow); }
+        .github-stats { display: flex; flex-wrap: wrap; gap: 18px; margin: 16px 0; font-size: 0.95rem; }
+        .github-stat { display: flex; align-items: center; gap: 4px; color: var(--on-surface-variant); text-shadow: var(--text-shadow); }
+        .stat-number { font-weight: 700; color: var(--primary); text-shadow: 0 1px 4px rgba(0,0,0,0.4); }
+        .design-philosophy { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 16px; }
         .design-badge {
-            display: inline-flex; align-items: center; gap: 6px;
-            padding: 8px 18px;
-            border-radius: var(--md-shape-corner-full);
-            background: var(--md-sys-color-secondary-container);
-            color: var(--md-sys-color-on-secondary-container);
-            font-size: 0.85rem;
-            font-weight: 600;
-            backdrop-filter: blur(5px);
-            -webkit-backdrop-filter: blur(5px);
+            display: inline-flex; align-items: center; gap: 6px; padding: 8px 18px;
+            border-radius: var(--radius-full); background: var(--glass-bg);
+            color: var(--on-surface); font-size: 0.85rem; font-weight: 500;
+            backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px);
+            text-shadow: var(--text-shadow); border: 1px solid var(--glass-border);
         }
-        .social-links {
-            display: flex; flex-wrap: wrap; gap: 12px; margin-top: 20px;
-        }
+        .social-links { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 20px; }
         .social-link {
-            display: inline-flex; align-items: center; gap: 6px;
-            padding: 8px 18px;
-            border-radius: var(--md-shape-corner-full);
-            background: var(--md-sys-color-primary-container);
-            color: var(--md-sys-color-on-primary-container);
-            text-decoration: none;
-            font-size: 0.85rem;
-            font-weight: 600;
-            transition: background var(--transition), box-shadow var(--transition);
-            backdrop-filter: blur(5px);
-            -webkit-backdrop-filter: blur(5px);
+            display: inline-flex; align-items: center; gap: 6px; padding: 8px 18px;
+            border-radius: var(--radius-full); background: var(--glass-bg);
+            color: var(--on-surface); text-decoration: none; font-size: 0.85rem; font-weight: 500;
+            transition: background var(--transition); backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px); border: 1px solid var(--glass-border);
+            text-shadow: var(--text-shadow);
         }
-        .social-link:hover {
-            background: var(--md-sys-color-primary);
-            color: var(--md-sys-color-on-primary);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-        }
+        .social-link:hover { background: var(--primary); color: white; }
 
-        /* 快捷入口卡片 */
         .quick-entry { margin: 30px 0; }
         .quick-entry-card {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 20px 24px;
-            text-decoration: none;
-            color: inherit;
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 18px 24px; text-decoration: none; color: inherit;
         }
-        .quick-entry-info {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
-        .quick-entry-title {
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: var(--md-sys-color-on-surface);
-        }
-        .quick-entry-desc {
-            font-size: 0.9rem;
-            color: var(--md-sys-color-on-surface-variant);
-        }
-        .quick-entry-arrow {
-            font-size: 1.5rem;
-            color: var(--md-sys-color-primary);
-            transition: transform var(--transition);
-        }
-        .quick-entry-card:hover .quick-entry-arrow {
-            transform: translateX(5px);
-        }
+        .quick-entry-info { display: flex; flex-direction: column; gap: 4px; }
+        .quick-entry-title { font-size: 1.3rem; font-weight: 700; color: var(--on-surface); text-shadow: var(--text-shadow); }
+        .quick-entry-desc { font-size: 0.9rem; color: var(--on-surface-variant); text-shadow: var(--text-shadow); }
+        .quick-entry-arrow { font-size: 1.5rem; color: var(--primary); transition: transform var(--transition); }
+        .quick-entry-card:hover .quick-entry-arrow { transform: translateX(5px); }
 
         .repos-section { margin: 40px 0; }
-        .section-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            color: var(--md-sys-color-on-surface);
-            text-shadow: var(--text-shadow-light);
-        }
-        .repos-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 16px;
-        }
+        .section-title { font-size: 1.5rem; font-weight: 700; margin-bottom: 20px; color: var(--on-surface); text-shadow: var(--text-shadow); display: flex; align-items: center; gap: 10px; }
+        .repos-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
         .repo-card {
-            background: var(--card-bg);
-            backdrop-filter: blur(var(--liquid-blur));
-            -webkit-backdrop-filter: blur(var(--liquid-blur));
-            border-radius: 24px;
-            box-shadow: var(--liquid-shadow-1);
-            border: 1px solid var(--card-border);
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            transition: box-shadow var(--transition);
+            background: var(--glass-bg); backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px);
+            border-radius: 24px; border: 1px solid var(--glass-border); padding: 20px;
+            display: flex; flex-direction: column; gap: 12px; transition: box-shadow 0.2s;
+            box-shadow: var(--glass-shadow); color: var(--on-surface);
         }
-        .repo-card:hover { box-shadow: var(--liquid-shadow-1), 0 10px 30px rgba(0,0,0,0.2); }
-        .repo-name {
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: var(--md-sys-color-primary);
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
+        .repo-card:hover { box-shadow: var(--glass-shadow), 0 8px 20px rgba(0,0,0,0.1); }
+        .repo-name { font-size: 1.1rem; font-weight: 700; color: var(--primary); text-decoration: none; }
         .repo-name:hover { text-decoration: underline; }
-        .repo-desc {
-            font-size: 0.85rem;
-            color: var(--md-sys-color-on-surface-variant);
-            line-height: 1.5;
-            flex: 1;
-        }
-        .repo-meta {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-            font-size: 0.75rem;
-            color: var(--md-sys-color-on-surface-variant);
-            align-items: center;
-        }
-        .repo-meta span {
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-        }
-        .language-dot {
-            width: 10px; height: 10px;
-            border-radius: 50%;
-            background: var(--md-sys-color-primary);
-        }
+        .repo-desc { font-size: 0.85rem; color: var(--on-surface-variant); text-shadow: var(--text-shadow); line-height: 1.5; flex: 1; }
+        .repo-meta { display: flex; flex-wrap: wrap; gap: 12px; font-size: 0.75rem; color: var(--on-surface-variant); }
+        .language-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
 
-        .site-link {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 22px;
-            height: 22px;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.25);
-            color: #fff;
-            margin-left: 6px;
-            transition: background 0.2s;
-            text-decoration: none;
-            font-size: 0.8rem;
-        }
-        .site-link:hover {
-            background: var(--md-sys-color-primary);
-        }
-
-        .loading, .error {
-            text-align: center; padding: 32px;
-            color: var(--md-sys-color-on-surface-variant);
-        }
-
-        .footer {
-            text-align: center; padding: 32px;
-            color: var(--md-sys-color-on-surface-variant);
-            font-size: 0.8rem;
-        }
-        .footer a { color: var(--md-sys-color-primary); }
+        .footer { text-align: center; padding: 32px; color: var(--on-surface-variant); font-size: 0.8rem; text-shadow: var(--text-shadow); }
+        .footer a { color: var(--primary); }
 
         @media (max-width: 600px) {
             .hero-card { flex-direction: column; text-align: center; }
@@ -372,22 +187,22 @@
     </style>
 </head>
 <body>
-    <video class="video-background" id="bgVideo" autoplay muted loop playsinline>
+    <video class="video-bg" id="bgVideo" autoplay muted loop playsinline>
         <source src="background.mp4" type="video/mp4">
     </video>
-    <div class="gradient-background" id="bgGradient"></div>
+    <div class="gradient-bg" id="bgGradient"></div>
 
     <div class="container">
         <div class="top-bar">
-            <select id="langSelect" aria-label="选择语言">
+            <select id="langSelect" class="top-btn">
                 <option value="zh">中文</option>
                 <option value="en">English</option>
             </select>
-            <button id="themeToggle" aria-label="切换主题">🌓 <span id="themeLabel">切换深浅</span></button>
+            <button id="themeToggle" class="top-btn">🌓 <span id="themeLabel">切换深浅</span></button>
         </div>
 
         <section class="hero">
-            <div class="hero-card liquid-glass-card">
+            <div class="hero-card glass">
                 <div class="avatar">
                     <img src="avatar.png" alt="FoodUI" onerror="this.style.display='none'; document.getElementById('avatarFallback').style.display='flex';">
                     <span id="avatarFallback" style="display:none; width:100%; height:100%; align-items:center; justify-content:center; font-size:2.5rem;">🍜</span>
@@ -401,35 +216,21 @@
                         <span class="github-stat"><span class="stat-number">--</span> <span class="stat-unit">关注</span></span>
                     </div>
                     <div class="design-philosophy">
-                        <span class="design-badge" id="badge1">✨ 现代简约</span>
-                        <span class="design-badge" id="badge2">⚡ 轻量高效</span>
-                        <span class="design-badge" id="badge3">🌍 开源共享</span>
+                        <span class="design-badge">✨ 现代简约</span>
+                        <span class="design-badge">⚡ 轻量高效</span>
+                        <span class="design-badge">🌍 开源共享</span>
                     </div>
                     <div class="social-links">
-                        <a href="https://github.com/FoodUI" target="_blank" class="social-link">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.385-1.335-1.755-1.335-1.755-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.605-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12z"/></svg>
-                            <span class="social-text">GitHub</span>
-                        </a>
-                        <a href="https://space.bilibili.com/99118896" target="_blank" class="social-link">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <line x1="9" y1="6" x2="9" y2="3" /><line x1="15" y1="6" x2="15" y2="3" />
-                                <rect x="4" y="6" width="16" height="13" rx="2" />
-                                <polygon points="10.5,10 10.5,14 14,12" fill="currentColor" stroke="none" />
-                            </svg>
-                            <span class="social-text">B站</span>
-                        </a>
-                        <a href="mailto:294825493@qq.com" class="social-link">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 4L12 13 2 4"/></svg>
-                            <span class="social-text">邮箱</span>
-                        </a>
+                        <a href="https://github.com/FoodUI" target="_blank" class="social-link">GitHub</a>
+                        <a href="https://space.bilibili.com/99118896" target="_blank" class="social-link">B站</a>
+                        <a href="mailto:294825493@qq.com" class="social-link">邮箱</a>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- FoodHub 快捷入口卡片 -->
         <section class="quick-entry">
-            <a href="https://foodui.github.io/foodhub/" target="_blank" class="liquid-glass-card quick-entry-card">
+            <a href="https://foodui.github.io/foodhub/" target="_blank" class="quick-entry-card glass">
                 <div class="quick-entry-info">
                     <div class="quick-entry-title">📁 FoodHub</div>
                     <div class="quick-entry-desc" id="foodhubDesc">配置文件与网盘资源分享站</div>
@@ -441,107 +242,62 @@
         <section class="repos-section">
             <h2 class="section-title" id="reposTitle">📦 我的仓库</h2>
             <div class="repos-grid" id="reposContainer">
-                <div class="loading" id="loadingText">正在加载仓库数据...</div>
+                <div style="color:var(--on-surface-variant); padding: 20px; text-shadow:var(--text-shadow);">正在加载仓库数据...</div>
             </div>
         </section>
 
         <footer class="footer">
-            <p id="footerText">© FoodUI · 由 <a href="https://deepseek.com" target="_blank">DeepSeek</a> 生成</p>
+            <p>© FoodUI · 由 <a href="https://deepseek.com" target="_blank">DeepSeek</a> 生成</p>
         </footer>
     </div>
 
     <script>
     (function() {
         const GITHUB_TOKEN = '';
-
         const i18n = {
             zh: {
-                siteTitle: 'FoodUI的Github小站',
                 tagline: '我的世界玩家，尝试新奇事物',
                 themeLabel: '切换深浅',
-                badge1: '✨ 现代简约',
-                badge2: '⚡ 轻量高效',
-                badge3: '🌍 开源共享',
-                socialGitHub: 'GitHub',
-                socialBilibili: 'B站',
-                socialEmail: '邮箱',
+                badges: ['✨ 现代简约', '⚡ 轻量高效', '🌍 开源共享'],
                 foodhubDesc: '配置文件与网盘资源分享站',
                 reposTitle: '📦 我的仓库',
-                loadingText: '正在加载仓库数据...',
-                errorText: '⚠️ 无法加载仓库，请检查网络或稍后再试。',
-                noReposText: '还没有公开仓库哦～',
+                loading: '正在加载仓库数据...',
+                error: '⚠️ 无法加载仓库，请稍后再试',
+                noRepos: '还没有公开仓库哦～',
                 noDesc: '暂无描述',
-                footerText: '© FoodUI · 由 <a href="https://deepseek.com" target="_blank">DeepSeek</a> 生成',
-                statRepo: '仓库',
-                statFollowers: '粉丝',
-                statFollowing: '关注'
+                footer: '© FoodUI · 由 <a href="https://deepseek.com" target="_blank">DeepSeek</a> 生成',
+                statRepo: '仓库', statFollowers: '粉丝', statFollowing: '关注'
             },
             en: {
-                siteTitle: "FoodUI's GitHub Site",
                 tagline: 'Minecraft player, exploring novel things.',
                 themeLabel: 'Toggle Theme',
-                badge1: '✨ Modern Minimalist',
-                badge2: '⚡ Lightweight & Efficient',
-                badge3: '🌍 Open Source',
-                socialGitHub: 'GitHub',
-                socialBilibili: 'Bilibili',
-                socialEmail: 'Email',
+                badges: ['✨ Modern Minimalist', '⚡ Lightweight & Efficient', '🌍 Open Source'],
                 foodhubDesc: 'Configuration & Drive Resource Sharing',
                 reposTitle: '📦 My Repositories',
-                loadingText: 'Loading repositories...',
-                errorText: '⚠️ Failed to load repositories. Please check your network and try again.',
-                noReposText: 'No public repositories yet~',
+                loading: 'Loading repositories...',
+                error: '⚠️ Failed to load repositories.',
+                noRepos: 'No public repositories yet~',
                 noDesc: 'No description',
-                footerText: '© FoodUI · Generated by <a href="https://deepseek.com" target="_blank">DeepSeek</a>',
-                statRepo: 'Repos',
-                statFollowers: 'Followers',
-                statFollowing: 'Following'
+                footer: '© FoodUI · Generated by <a href="https://deepseek.com" target="_blank">DeepSeek</a>',
+                statRepo: 'Repos', statFollowers: 'Followers', statFollowing: 'Following'
             }
         };
+        let currentLang = 'zh';
 
-        let currentLang = localStorage.getItem('foodui_lang') || 'zh';
-        function t(key) { return (i18n[currentLang] && i18n[currentLang][key]) || key; }
-
-        function applyLanguage() {
+        function t(key) { return i18n[currentLang]?.[key] || key; }
+        function applyLang() {
             document.documentElement.lang = currentLang === 'zh' ? 'zh-CN' : 'en';
-            document.title = t('siteTitle');
             document.getElementById('tagline').textContent = t('tagline');
             document.getElementById('themeLabel').textContent = t('themeLabel');
-            document.getElementById('badge1').textContent = t('badge1');
-            document.getElementById('badge2').textContent = t('badge2');
-            document.getElementById('badge3').textContent = t('badge3');
-            document.querySelectorAll('.social-text').forEach(el => {
-                const parent = el.parentElement;
-                if (parent.href.includes('github.com')) el.textContent = t('socialGitHub');
-                else if (parent.href.includes('bilibili.com')) el.textContent = t('socialBilibili');
-                else if (parent.href.startsWith('mailto:')) el.textContent = t('socialEmail');
-            });
+            document.querySelectorAll('.design-badge').forEach((el, i) => el.textContent = t('badges')[i] || el.textContent);
             document.getElementById('foodhubDesc').textContent = t('foodhubDesc');
             document.getElementById('reposTitle').textContent = t('reposTitle');
-            document.getElementById('loadingText').textContent = t('loadingText');
-            document.getElementById('footerText').innerHTML = t('footerText');
-            const statUnits = document.querySelectorAll('.stat-unit');
-            if (statUnits.length >= 3) {
-                statUnits[0].textContent = t('statRepo');
-                statUnits[1].textContent = t('statFollowers');
-                statUnits[2].textContent = t('statFollowing');
-            }
-            updateRepoTexts();
-        }
-
-        function updateRepoTexts() {
-            const container = document.getElementById('reposContainer');
-            if (container.querySelector('.loading')) {
-                container.querySelector('.loading').textContent = t('loadingText');
-            } else if (container.querySelector('.error')) {
-                container.querySelector('.error').textContent = t('errorText');
-            } else {
-                const descs = container.querySelectorAll('.repo-desc');
-                descs.forEach(desc => {
-                    if (desc.textContent === i18n.zh.noDesc || desc.textContent === i18n.en.noDesc) {
-                        desc.textContent = t('noDesc');
-                    }
-                });
+            document.getElementById('footerText').innerHTML = t('footer');
+            const units = document.querySelectorAll('.stat-unit');
+            if (units.length >= 3) {
+                units[0].textContent = t('statRepo');
+                units[1].textContent = t('statFollowers');
+                units[2].textContent = t('statFollowing');
             }
         }
 
@@ -550,110 +306,84 @@
         langSelect.addEventListener('change', function() {
             currentLang = this.value;
             localStorage.setItem('foodui_lang', currentLang);
-            applyLanguage();
+            applyLang();
             fetchRepos();
         });
 
         const systemDark = window.matchMedia('(prefers-color-scheme: dark)');
         const themeToggle = document.getElementById('themeToggle');
-
         function applyTheme(mode) {
-            if (mode === 'dark') {
-                document.documentElement.setAttribute('data-theme', 'dark');
-            } else if (mode === 'light') {
-                document.documentElement.setAttribute('data-theme', 'light');
-            } else {
-                document.documentElement.setAttribute('data-theme', systemDark.matches ? 'dark' : 'light');
-            }
+            if (mode === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+            else if (mode === 'light') document.documentElement.setAttribute('data-theme', 'light');
+            else document.documentElement.setAttribute('data-theme', systemDark.matches ? 'dark' : 'light');
+            localStorage.setItem('foodui_theme', mode);
         }
-
         function getStoredTheme() { return localStorage.getItem('foodui_theme') || 'auto'; }
-        function setTheme(mode) { applyTheme(mode); localStorage.setItem('foodui_theme', mode); }
-
         const currentTheme = getStoredTheme();
         applyTheme(currentTheme);
-        systemDark.addEventListener('change', () => {
-            if (getStoredTheme() === 'auto') applyTheme('auto');
-        });
-
+        systemDark.addEventListener('change', () => { if (getStoredTheme() === 'auto') applyTheme('auto'); });
         themeToggle.addEventListener('click', () => {
-            const current = document.documentElement.getAttribute('data-theme');
-            setTheme(current === 'dark' ? 'light' : 'dark');
-        });
-
-        const bgVideo = document.getElementById('bgVideo');
-        const bgGradient = document.getElementById('bgGradient');
-        bgVideo.addEventListener('loadeddata', () => { bgGradient.style.display = 'none'; });
-        bgVideo.addEventListener('error', () => { bgVideo.style.display = 'none'; bgGradient.style.display = 'block'; });
-        window.addEventListener('load', () => {
-            if (bgVideo.readyState < 2) { bgVideo.style.display = 'none'; bgGradient.style.display = 'block'; }
+            const cur = document.documentElement.getAttribute('data-theme');
+            applyTheme(cur === 'dark' ? 'light' : 'dark');
         });
 
         async function fetchGitHubProfile() {
             try {
-                const headers = GITHUB_TOKEN ? { Authorization: `token ${GITHUB_TOKEN}` } : {};
-                const res = await fetch('https://api.github.com/users/FoodUI', { headers });
+                const res = await fetch('https://api.github.com/users/FoodUI');
                 const data = await res.json();
-                const statNumbers = document.querySelectorAll('#githubStats .stat-number');
-                if (statNumbers.length >= 3) {
-                    statNumbers[0].textContent = data.public_repos;
-                    statNumbers[1].textContent = data.followers;
-                    statNumbers[2].textContent = data.following;
+                const nums = document.querySelectorAll('#githubStats .stat-number');
+                if (nums.length >= 3) {
+                    nums[0].textContent = data.public_repos;
+                    nums[1].textContent = data.followers;
+                    nums[2].textContent = data.following;
                 }
             } catch(e) {}
         }
 
         async function checkPages(repoName) {
             try {
-                const headers = GITHUB_TOKEN ? { Authorization: `token ${GITHUB_TOKEN}` } : {};
-                const res = await fetch(`https://api.github.com/repos/FoodUI/${repoName}/pages`, { headers });
+                const res = await fetch(`https://api.github.com/repos/FoodUI/${repoName}/pages`);
                 return res.ok;
             } catch(e) { return false; }
         }
 
         async function fetchRepos() {
             const container = document.getElementById('reposContainer');
-            container.innerHTML = `<div class="loading">${t('loadingText')}</div>`;
+            container.innerHTML = `<div style="color:var(--on-surface-variant); text-shadow:var(--text-shadow);">${t('loading')}</div>`;
             try {
-                const headers = GITHUB_TOKEN ? { Authorization: `token ${GITHUB_TOKEN}` } : {};
-                const res = await fetch('https://api.github.com/users/FoodUI/repos?sort=updated&per_page=100', { headers });
+                const res = await fetch('https://api.github.com/users/FoodUI/repos?sort=updated&per_page=100');
                 if (!res.ok) throw new Error();
                 const repos = await res.json();
                 const filtered = repos.filter(r => !r.fork && r.name !== 'FoodUI.github.io');
-                const pagesChecks = await Promise.allSettled(
-                    filtered.map(repo => checkPages(repo.name))
-                );
-                filtered.forEach((repo, index) => {
-                    repo.hasPages = pagesChecks[index].status === 'fulfilled' && pagesChecks[index].value === true;
-                });
+                const checks = await Promise.allSettled(filtered.map(r => checkPages(r.name)));
+                filtered.forEach((r, i) => r.hasPages = checks[i].status === 'fulfilled' && checks[i].value === true);
                 renderRepos(filtered);
             } catch(e) {
-                container.innerHTML = `<div class="error">${t('errorText')}</div>`;
+                container.innerHTML = `<div style="color:var(--on-surface-variant); text-shadow:var(--text-shadow);">${t('error')}</div>`;
             }
         }
 
         function renderRepos(repos) {
             const container = document.getElementById('reposContainer');
             if (!repos.length) {
-                container.innerHTML = `<div class="loading">${t('noReposText')}</div>`;
+                container.innerHTML = `<div style="color:var(--on-surface-variant); text-shadow:var(--text-shadow);">${t('noRepos')}</div>`;
                 return;
             }
             container.innerHTML = repos.map(repo => {
                 const siteUrl = `https://FoodUI.github.io/${repo.name}/`;
-                const siteIcon = repo.hasPages
-                    ? `<a href="${siteUrl}" target="_blank" class="site-link" title="访问网站">🌐</a>`
-                    : '';
+                const siteIcon = repo.hasPages ? `<a href="${siteUrl}" target="_blank" style="color:var(--primary); text-decoration:none; font-size:0.8rem;" title="网站">🌐</a>` : '';
+                const langColor = {
+                    'JavaScript':'#f7df1e','TypeScript':'#3178c6','Python':'#3572A5','Java':'#b07219','C++':'#f34b7d','C#':'#178600','Go':'#00ADD8','Rust':'#dea584','Kotlin':'#A97BFF','Swift':'#ffac45','Dart':'#00B4AB'
+                }[repo.language] || '#858585';
                 return `
                 <div class="repo-card">
                     <div style="display: flex; align-items: center; justify-content: space-between;">
-                        <a href="${repo.html_url}" target="_blank" class="repo-name">
-                            📁 ${repo.name}
-                        </a>
+                        <a href="${repo.html_url}" target="_blank" class="repo-name">📁 ${repo.name}</a>
                         ${siteIcon}
                     </div>
                     <div class="repo-desc">${repo.description || t('noDesc')}</div>
                     <div class="repo-meta">
-                        ${repo.language ? `<span><span class="language-dot" style="background:${getLanguageColor(repo.language)}"></span> ${repo.language}</span>` : ''}
+                        ${repo.language ? `<span><span class="language-dot" style="background:${langColor}"></span> ${repo.language}</span>` : ''}
                         <span>⭐ ${repo.stargazers_count}</span>
                         <span>🔄 ${repo.forks_count}</span>
                         <span>📅 ${new Date(repo.updated_at).toLocaleDateString(currentLang === 'zh' ? 'zh-CN' : 'en-US')}</span>
@@ -662,18 +392,17 @@
             }).join('');
         }
 
-        function getLanguageColor(lang) {
-            const colors = {
-                'JavaScript': '#f7df1e', 'TypeScript': '#3178c6', 'Python': '#3572A5',
-                'Java': '#b07219', 'C++': '#f34b7d', 'C#': '#178600', 'Ruby': '#701516',
-                'Go': '#00ADD8', 'Swift': '#ffac45', 'Kotlin': '#A97BFF', 'Rust': '#dea584', 'Dart': '#00B4AB',
-            };
-            return colors[lang] || '#858585';
-        }
-
-        applyLanguage();
+        // 初始化
+        applyLang();
         fetchGitHubProfile();
         fetchRepos();
+
+        // 背景视频回退
+        const video = document.getElementById('bgVideo');
+        const gradient = document.getElementById('bgGradient');
+        video.addEventListener('loadeddata', () => { gradient.style.display = 'none'; });
+        video.addEventListener('error', () => { video.style.display = 'none'; gradient.style.display = 'block'; });
+        if (video.readyState < 2) { video.style.display = 'none'; gradient.style.display = 'block'; }
     })();
     </script>
 </body>
