@@ -3,23 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FoodUI · 玻璃质感</title>
+    <title>FoodUI · 纯净透明</title>
     <meta name="description" content="FoodUI 的个人主页 — 我的世界玩家，尝试新奇事物。">
     <meta name="author" content="FoodUI">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍜</text></svg>">
     <style>
         :root {
-            --text-color: #3e3e3e;
-            --text-shadow: 0 1px 4px rgba(255,255,255,0.8);
+            --text-color: #2c2c2c;
+            --text-shadow: 0 1px 4px rgba(255,255,255,0.85);
+            --border-color: rgba(255, 255, 255, 0.25);
             --radius-lg: 28px;
             --radius-sm: 24px;
-            --radius-btn: 30px;
             --font: 'PingFang SC', 'Microsoft YaHei', 'Helvetica Neue', sans-serif;
         }
 
         [data-theme="dark"] {
             --text-color: #e8e8e8;
             --text-shadow: 0 1px 4px rgba(0,0,0,0.7);
+            --border-color: rgba(255, 255, 255, 0.1);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -31,22 +32,16 @@
             transition: background 0.3s, color 0.3s;
             position: relative;
             overflow-x: hidden;
-            user-select: none;
-            --grid-color: #dbdbdb;
             background-color: #F3F3F3;
             background-image:
-                linear-gradient(0deg, transparent 24%, var(--grid-color) 25%, var(--grid-color) 26%, transparent 27%, transparent 74%, var(--grid-color) 75%, var(--grid-color) 76%, transparent 77%, transparent),
-                linear-gradient(90deg, transparent 24%, var(--grid-color) 25%, var(--grid-color) 26%, transparent 27%, transparent 74%, var(--grid-color) 75%, var(--grid-color) 76%, transparent 77%, transparent);
+                linear-gradient(0deg, transparent 24%, #dbdbdb 25%, #dbdbdb 26%, transparent 27%, transparent 74%, #dbdbdb 75%, #dbdbdb 76%, transparent 77%, transparent),
+                linear-gradient(90deg, transparent 24%, #dbdbdb 25%, #dbdbdb 26%, transparent 27%, transparent 74%, #dbdbdb 75%, #dbdbdb 76%, transparent 77%, transparent);
             background-size: 50px 50px;
         }
 
         [data-theme="dark"] body {
-            --grid-color: #2a2a2d;
             background: #1c1c1e;
-            background-image:
-                linear-gradient(0deg, transparent 24%, var(--grid-color) 25%, var(--grid-color) 26%, transparent 27%, transparent 74%, var(--grid-color) 75%, var(--grid-color) 76%, transparent 77%, transparent),
-                linear-gradient(90deg, transparent 24%, var(--grid-color) 25%, var(--grid-color) 26%, transparent 27%, transparent 74%, var(--grid-color) 75%, var(--grid-color) 76%, transparent 77%, transparent);
-            background-size: 50px 50px;
+            background-image: none;
         }
 
         .video-bg-layer {
@@ -61,194 +56,47 @@
 
         .container { max-width: 960px; margin: 0 auto; padding: 0 20px; position: relative; z-index: 1; }
 
-        /* ========== 按钮风格玻璃卡片 ========== */
-        /*
-           核心特征（继承自参考按钮）：
-           - 多层 inset 阴影模拟玻璃厚度
-           - 极低透明度背景
-           - 微弱毛玻璃
-           - ::before 模糊暗色边框
-           - ::after 对角高光渐变
-           - 内部装饰边框
-        */
-        .glass-card {
-            --w: 100%;
-            --h: 100%;
-            --r: var(--radius-lg);
-            --tr: 25%;
-            position: relative;
-            border-radius: var(--r);
-            border: 1px double rgba(51, 51, 51, 0.08);
-            box-shadow:
-                inset 2px -2px 1px -1px rgba(255, 255, 255, 0.9),
-                inset -2px 2px 1px -1px rgba(255, 255, 255, 0.9),
-                inset 6px -6px 1px -6px rgba(255, 255, 255, 0.55),
-                inset -6px 6px 1px -6px rgba(255, 255, 255, 0.55),
-                inset 0 0 2px rgba(0, 0, 0, 0.8),
-                0 4px 8px rgba(0, 0, 0, 0.2);
-            background: rgba(255, 255, 255, 0.04);
-            backdrop-filter: blur(2px);
-            -webkit-backdrop-filter: blur(2px);
-            filter: brightness(0.9);
-            transition: all 0.35s ease;
-            overflow: hidden;
-        }
-        .glass-card:hover {
-            filter: brightness(0.95);
-            box-shadow:
-                inset 2px -2px 1px -1px rgba(255, 255, 255, 0.95),
-                inset -2px 2px 1px -1px rgba(255, 255, 255, 0.95),
-                inset 6px -6px 1px -6px rgba(255, 255, 255, 0.65),
-                inset -6px 6px 1px -6px rgba(255, 255, 255, 0.65),
-                inset 0 0 2px rgba(0, 0, 0, 0.9),
-                0 6px 12px rgba(0, 0, 0, 0.25);
-        }
-        /* 模糊暗色边框 */
-        .glass-card::before {
-            content: '';
-            position: absolute;
-            z-index: 1;
-            top: 8px; left: 8px; right: 8px; bottom: 8px;
-            border-radius: inherit;
-            border: 1px solid rgba(0, 0, 0, 0.9);
-            filter: blur(8px);
-            pointer-events: none;
-        }
-        /* 对角高光渐变 */
-        .glass-card::after {
-            content: '';
-            position: absolute;
-            z-index: 501;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            border-radius: inherit;
-            filter: blur(3px);
-            background: linear-gradient(
-                45deg,
-                rgba(255, 255, 255, 0.8) 0%,
-                transparent var(--tr),
-                transparent calc(100% - var(--tr)),
-                rgba(255, 255, 255, 0.8) 100%
-            );
-            pointer-events: none;
-        }
-        /* 内部装饰边框 */
-        .glass-inner-border {
-            position: absolute;
-            top: 4px; left: 4px; right: 4px; bottom: 4px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: inherit;
-            filter: blur(1px);
-            pointer-events: none;
-            z-index: 2;
-        }
-        /* 内容层（确保文字在伪元素之上） */
-        .glass-content {
-            position: relative;
-            z-index: 502;
-        }
-
-        /* 小型玻璃卡片（仓库卡片、按钮等） */
-        .glass-card-sm {
-            --r: var(--radius-sm);
-            --tr: 25%;
-            position: relative;
-            border-radius: var(--r);
-            border: 1px double rgba(51, 51, 51, 0.08);
-            box-shadow:
-                inset 2px -2px 1px -1px rgba(255, 255, 255, 0.9),
-                inset -2px 2px 1px -1px rgba(255, 255, 255, 0.9),
-                inset 4px -4px 1px -4px rgba(255, 255, 255, 0.5),
-                inset -4px 4px 1px -4px rgba(255, 255, 255, 0.5),
-                inset 0 0 1px rgba(0, 0, 0, 0.7),
-                0 3px 6px rgba(0, 0, 0, 0.18);
-            background: rgba(255, 255, 255, 0.04);
-            backdrop-filter: blur(2px);
-            -webkit-backdrop-filter: blur(2px);
-            filter: brightness(0.9);
-            transition: all 0.3s ease;
-            overflow: hidden;
-        }
-        .glass-card-sm:hover {
-            filter: brightness(0.95);
-            box-shadow:
-                inset 2px -2px 1px -1px rgba(255, 255, 255, 0.95),
-                inset -2px 2px 1px -1px rgba(255, 255, 255, 0.95),
-                inset 4px -4px 1px -4px rgba(255, 255, 255, 0.6),
-                inset -4px 4px 1px -4px rgba(255, 255, 255, 0.6),
-                inset 0 0 1px rgba(0, 0, 0, 0.8),
-                0 5px 10px rgba(0, 0, 0, 0.22);
-        }
-        .glass-card-sm::before {
-            content: '';
-            position: absolute;
-            z-index: 1;
-            top: 6px; left: 6px; right: 6px; bottom: 6px;
-            border-radius: inherit;
-            border: 1px solid rgba(0, 0, 0, 0.8);
-            filter: blur(6px);
-            pointer-events: none;
-        }
-        .glass-card-sm::after {
-            content: '';
-            position: absolute;
-            z-index: 501;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            border-radius: inherit;
-            filter: blur(2px);
-            background: linear-gradient(
-                45deg,
-                rgba(255, 255, 255, 0.7) 0%,
-                transparent var(--tr),
-                transparent calc(100% - var(--tr)),
-                rgba(255, 255, 255, 0.7) 100%
-            );
-            pointer-events: none;
-        }
-        .glass-inner-border-sm {
-            position: absolute;
-            top: 3px; left: 3px; right: 3px; bottom: 3px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: inherit;
-            filter: blur(1px);
-            pointer-events: none;
-            z-index: 2;
-        }
-
         .top-bar { display: flex; justify-content: flex-end; gap: 12px; padding: 20px 0 0; }
         .top-btn {
-            position: relative;
-            background: rgba(255,255,255,0.04);
-            border: 1px double rgba(51,51,51,0.08);
+            background: transparent;
+            border: 1px solid var(--border-color);
             border-radius: 30px;
             padding: 8px 16px;
             font-size: 0.85rem;
             cursor: pointer;
             color: var(--text-color);
-            backdrop-filter: blur(2px);
-            -webkit-backdrop-filter: blur(2px);
-            box-shadow:
-                inset 1px -1px 1px -1px rgba(255,255,255,0.8),
-                inset -1px 1px 1px -1px rgba(255,255,255,0.8),
-                inset 3px -3px 1px -3px rgba(255,255,255,0.4),
-                inset -3px 3px 1px -3px rgba(255,255,255,0.4),
-                0 2px 4px rgba(0,0,0,0.15);
-            filter: brightness(0.9);
-            transition: all 0.3s ease;
+            transition: border-color 0.3s ease;
             font-family: inherit;
             text-shadow: var(--text-shadow);
-            z-index: 1;
         }
-        .top-btn:hover {
-            filter: brightness(0.95);
-            box-shadow:
-                inset 1px -1px 1px -1px rgba(255,255,255,0.9),
-                inset -1px 1px 1px -1px rgba(255,255,255,0.9),
-                inset 3px -3px 1px -3px rgba(255,255,255,0.5),
-                inset -3px 3px 1px -3px rgba(255,255,255,0.5),
-                0 3px 6px rgba(0,0,0,0.2);
+        .top-btn:hover { border-color: rgba(255,255,255,0.5); }
+
+        /* 纯净透明卡片 - 仅边框勾勒 */
+        .clear-card {
+            position: relative;
+            background: transparent;
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-color);
+            backdrop-filter: none;
+            -webkit-backdrop-filter: none;
+            box-shadow: none;
+            overflow: hidden;
+            transition: border-color 0.35s ease;
         }
+        .clear-card:hover { border-color: rgba(255,255,255,0.5); }
+
+        .clear-card-sm {
+            position: relative;
+            background: transparent;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-color);
+            backdrop-filter: none;
+            -webkit-backdrop-filter: none;
+            box-shadow: none;
+            overflow: hidden;
+            transition: border-color 0.35s ease;
+        }
+        .clear-card-sm:hover { border-color: rgba(255,255,255,0.5); }
 
         .hero { margin: 32px 0; }
         .hero-card {
@@ -260,31 +108,16 @@
         }
         .avatar {
             width: 96px; height: 96px; border-radius: 50%;
-            background: rgba(255,255,255,0.2); color: var(--text-color);
             display: flex; align-items: center; justify-content: center;
             font-size: 2.5rem; font-weight: 500; flex-shrink: 0; overflow: hidden;
-            position: relative;
-            z-index: 502;
-            border: 1px double rgba(51,51,51,0.08);
-            box-shadow:
-                inset 2px -2px 1px -1px rgba(255,255,255,0.9),
-                inset -2px 2px 1px -1px rgba(255,255,255,0.9),
-                inset 0 0 2px rgba(0,0,0,0.7),
-                0 3px 6px rgba(0,0,0,0.18);
-            filter: brightness(0.9);
+            border: 1px solid var(--border-color);
+            background: transparent;
+            color: var(--text-color);
         }
         .avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
         .hero-text { flex: 1; min-width: 260px; }
-        .hero-text h1 {
-            font-size: 2rem; font-weight: 600; color: var(--text-color);
-            text-shadow: var(--text-shadow);
-            filter: drop-shadow(0 25px 3px rgba(102,102,102,0.2));
-        }
-        .hero-text .tagline {
-            font-size: 1rem; opacity: 0.85; margin: 8px 0 16px;
-            text-shadow: var(--text-shadow);
-            filter: drop-shadow(0 25px 3px rgba(102,102,102,0.15));
-        }
+        .hero-text h1 { font-size: 2rem; font-weight: 600; color: var(--text-color); text-shadow: var(--text-shadow); }
+        .hero-text .tagline { font-size: 1rem; opacity: 0.85; margin: 8px 0 16px; text-shadow: var(--text-shadow); }
         .github-stats { display: flex; flex-wrap: wrap; gap: 18px; margin: 16px 0; font-size: 0.95rem; }
         .github-stat { display: flex; align-items: center; gap: 4px; color: var(--text-color); text-shadow: var(--text-shadow); }
         .stat-number { font-weight: 700; }
@@ -292,23 +125,19 @@
         .design-badge {
             display: inline-flex; align-items: center; gap: 6px;
             padding: 8px 18px; border-radius: 30px;
-            background: transparent;
+            background: transparent; border: 1px solid var(--border-color);
             color: var(--text-color); font-size: 0.85rem; font-weight: 500;
             text-shadow: var(--text-shadow);
-            filter: drop-shadow(0 25px 3px rgba(102,102,102,0.15));
         }
         .social-links { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 20px; }
         .social-link {
             display: inline-flex; align-items: center; gap: 6px;
             padding: 8px 18px; border-radius: 30px;
-            background: transparent;
+            background: transparent; border: 1px solid var(--border-color);
             color: var(--text-color); text-decoration: none; font-size: 0.85rem;
-            font-weight: 500; transition: all 0.3s ease; text-shadow: var(--text-shadow);
-            filter: drop-shadow(0 25px 3px rgba(102,102,102,0.15));
+            font-weight: 500; transition: border-color 0.3s ease; text-shadow: var(--text-shadow);
         }
-        .social-link:hover {
-            filter: drop-shadow(0 25px 5px rgba(102,102,102,0.25));
-        }
+        .social-link:hover { border-color: rgba(255,255,255,0.5); }
 
         .quick-entry { margin: 30px 0; }
         .quick-entry-card {
@@ -316,52 +145,27 @@
             display: flex; align-items: center; justify-content: space-between;
         }
         .quick-entry-info { display: flex; flex-direction: column; gap: 4px; }
-        .quick-entry-title {
-            font-size: 1.3rem; font-weight: 600; color: var(--text-color);
-            text-shadow: var(--text-shadow);
-            filter: drop-shadow(0 25px 3px rgba(102,102,102,0.2));
-        }
-        .quick-entry-desc {
-            font-size: 0.9rem; opacity: 0.8; text-shadow: var(--text-shadow);
-            filter: drop-shadow(0 25px 3px rgba(102,102,102,0.15));
-        }
+        .quick-entry-title { font-size: 1.3rem; font-weight: 600; color: var(--text-color); text-shadow: var(--text-shadow); }
+        .quick-entry-desc { font-size: 0.9rem; opacity: 0.8; text-shadow: var(--text-shadow); }
         .quick-entry-arrow { font-size: 1.5rem; transition: transform 0.3s ease; }
         .quick-entry-card:hover .quick-entry-arrow { transform: translateX(5px); }
 
         .repos-section { margin: 40px 0; }
-        .section-title {
-            font-size: 1.5rem; font-weight: 600; margin-bottom: 20px;
-            color: var(--text-color); text-shadow: var(--text-shadow);
-            filter: drop-shadow(0 25px 3px rgba(102,102,102,0.2));
-        }
+        .section-title { font-size: 1.5rem; font-weight: 600; margin-bottom: 20px; color: var(--text-color); text-shadow: var(--text-shadow); }
         .repos-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
         .repo-card {
             padding: 20px; display: flex; flex-direction: column; gap: 12px;
-            transition: all 0.35s ease;
-            position: relative;
+            background: transparent;
+            transition: border-color 0.35s ease;
         }
-        .repo-card > * { position: relative; z-index: 502; }
-        .repo-name {
-            font-size: 1.1rem; font-weight: 600; color: var(--text-color);
-            text-decoration: none;
-            filter: drop-shadow(0 25px 3px rgba(102,102,102,0.2));
-        }
+        .repo-name { font-size: 1.1rem; font-weight: 600; color: var(--text-color); text-decoration: none; }
         .repo-name:hover { text-decoration: underline; }
-        .repo-desc {
-            font-size: 0.85rem; opacity: 0.8; line-height: 1.5; flex: 1;
-            filter: drop-shadow(0 25px 3px rgba(102,102,102,0.15));
-        }
-        .repo-meta {
-            display: flex; flex-wrap: wrap; gap: 12px; font-size: 0.75rem; opacity: 0.7;
-            filter: drop-shadow(0 25px 3px rgba(102,102,102,0.1));
-        }
+        .repo-desc { font-size: 0.85rem; opacity: 0.8; line-height: 1.5; flex: 1; }
+        .repo-meta { display: flex; flex-wrap: wrap; gap: 12px; font-size: 0.75rem; opacity: 0.7; }
         .language-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
         .site-link { color: inherit; text-decoration: none; font-size: 0.8rem; }
 
-        .footer {
-            text-align: center; padding: 32px; opacity: 0.6; font-size: 0.8rem;
-            text-shadow: var(--text-shadow);
-        }
+        .footer { text-align: center; padding: 32px; opacity: 0.6; font-size: 0.8rem; }
         .footer a { color: inherit; }
 
         @media (max-width: 600px) {
@@ -385,13 +189,12 @@
         </div>
 
         <section class="hero">
-            <div class="glass-card hero-card">
-                <div class="glass-inner-border"></div>
+            <div class="clear-card hero-card">
                 <div class="avatar">
                     <img src="avatar.png" alt="FoodUI" onerror="this.style.display='none'; document.getElementById('avatarFallback').style.display='flex';">
                     <span id="avatarFallback" style="display:none; width:100%; height:100%; align-items:center; justify-content:center; font-size:2.5rem;">🍜</span>
                 </div>
-                <div class="hero-text glass-content">
+                <div class="hero-text">
                     <h1>FoodUI</h1>
                     <p class="tagline" id="tagline">我的世界玩家，尝试新奇事物</p>
                     <div class="github-stats" id="githubStats">
@@ -414,16 +217,13 @@
         </section>
 
         <section class="quick-entry">
-            <div class="glass-card quick-entry-card">
-                <div class="glass-inner-border"></div>
-                <a href="https://foodui.github.io/foodhub/" target="_blank" style="display:flex;align-items:center;justify-content:space-between;width:100%;text-decoration:none;color:inherit;position:relative;z-index:502;">
-                    <div class="quick-entry-info">
-                        <div class="quick-entry-title">📁 FoodHub</div>
-                        <div class="quick-entry-desc" id="foodhubDesc">配置文件与网盘资源分享站</div>
-                    </div>
-                    <span class="quick-entry-arrow">→</span>
-                </a>
-            </div>
+            <a href="https://foodui.github.io/foodhub/" target="_blank" class="clear-card quick-entry-card">
+                <div class="quick-entry-info">
+                    <div class="quick-entry-title">📁 FoodHub</div>
+                    <div class="quick-entry-desc" id="foodhubDesc">配置文件与网盘资源分享站</div>
+                </div>
+                <span class="quick-entry-arrow">→</span>
+            </a>
         </section>
 
         <section class="repos-section">
@@ -560,8 +360,7 @@
                     'JavaScript':'#f7df1e','TypeScript':'#3178c6','Python':'#3572A5','Java':'#b07219','C++':'#f34b7d','C#':'#178600','Go':'#00ADD8','Rust':'#dea584','Kotlin':'#A97BFF','Swift':'#ffac45','Dart':'#00B4AB'
                 }[repo.language] || '#858585';
                 return `
-                <div class="glass-card-sm repo-card">
-                    <div class="glass-inner-border-sm"></div>
+                <div class="clear-card-sm repo-card">
                     <div style="display: flex; align-items: center; justify-content: space-between;">
                         <a href="${repo.html_url}" target="_blank" class="repo-name">📁 ${repo.name}</a>
                         ${siteIcon}
