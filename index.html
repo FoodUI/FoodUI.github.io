@@ -3,32 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FoodUI · 透明液体玻璃</title>
+    <title>FoodUI · 水滴透明玻璃</title>
     <meta name="description" content="FoodUI 的个人主页 — 我的世界玩家，尝试新奇事物。">
     <meta name="author" content="FoodUI">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍜</text></svg>">
     <style>
         :root {
             --text-color: #2c2c2c;
-            --text-shadow: 0 1px 2px rgba(255,255,255,0.8);
-            --glass-border: rgba(255, 255, 255, 0.35);
-            --glass-shadow: 0 2px 8px rgba(0,0,0,0.04), inset 0 0 0 1px rgba(255,255,255,0.35);
-            --glass-shadow-hover: 0 6px 16px rgba(0,0,0,0.06), inset 0 0 0 1px rgba(255,255,255,0.55);
-            --liquid-color-1: rgba(255,255,255,0.2);
-            --liquid-color-2: rgba(255,255,255,0.06);
+            --text-shadow: 0 1px 4px rgba(255,255,255,0.9);
+            /* 水滴边框：极淡的白色 */
+            --drop-border: 1px solid rgba(255, 255, 255, 0.4);
+            /* 水滴阴影：内阴影模拟表面张力，外阴影模拟水滴投影 */
+            --drop-shadow:
+                inset 0 1px 4px rgba(255,255,255,0.6),
+                inset 0 -1px 2px rgba(0,0,0,0.05),
+                0 2px 8px rgba(0,0,0,0.06);
+            --drop-shadow-hover:
+                inset 0 1px 6px rgba(255,255,255,0.8),
+                inset 0 -1px 3px rgba(0,0,0,0.08),
+                0 4px 12px rgba(0,0,0,0.1);
             --radius: 28px;
-            --blur: 0px;
             --font: 'PingFang SC', 'Microsoft YaHei', 'Helvetica Neue', sans-serif;
         }
 
         [data-theme="dark"] {
             --text-color: #e8e8e8;
-            --text-shadow: 0 1px 3px rgba(0,0,0,0.6);
-            --glass-border: rgba(255, 255, 255, 0.15);
-            --glass-shadow: 0 2px 8px rgba(0,0,0,0.15), inset 0 0 0 1px rgba(255,255,255,0.15);
-            --glass-shadow-hover: 0 6px 16px rgba(0,0,0,0.25), inset 0 0 0 1px rgba(255,255,255,0.25);
-            --liquid-color-1: rgba(255,255,255,0.1);
-            --liquid-color-2: rgba(255,255,255,0.03);
+            --text-shadow: 0 1px 4px rgba(0,0,0,0.7);
+            --drop-border: 1px solid rgba(255, 255, 255, 0.15);
+            --drop-shadow:
+                inset 0 1px 4px rgba(255,255,255,0.15),
+                inset 0 -1px 2px rgba(0,0,0,0.2),
+                0 2px 8px rgba(0,0,0,0.2);
+            --drop-shadow-hover:
+                inset 0 1px 6px rgba(255,255,255,0.25),
+                inset 0 -1px 3px rgba(0,0,0,0.3),
+                0 4px 12px rgba(0,0,0,0.3);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -40,7 +49,6 @@
             transition: background 0.3s, color 0.3s;
             position: relative;
             overflow-x: hidden;
-            /* 保留网格背景作为回退层 */
             background-color: #F3F3F3;
             background-image:
                 linear-gradient(0deg, transparent 24%, #dbdbdb 25%, #dbdbdb 26%, transparent 27%, transparent 74%, #dbdbdb 75%, #dbdbdb 76%, transparent 77%, transparent),
@@ -53,104 +61,68 @@
             background-image: none;
         }
 
-        /* ========== 视频背景层（新增） ========== */
         .video-bg-layer {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
             object-fit: cover;
             z-index: -1;
-            /* 在网格背景之上，内容之下 */
             opacity: 1;
-            transition: opacity 0.5s ease;
         }
-        /* 当视频加载失败时，自动隐藏以显示网格背景 */
-        .video-bg-layer.hidden {
-            opacity: 0;
-            pointer-events: none;
-        }
+        .video-bg-layer.hidden { opacity: 0; pointer-events: none; }
 
         .container { max-width: 960px; margin: 0 auto; padding: 0 20px; position: relative; z-index: 1; }
 
-        .top-bar {
-            display: flex; justify-content: flex-end; gap: 12px; padding: 20px 0 0;
-        }
+        .top-bar { display: flex; justify-content: flex-end; gap: 12px; padding: 20px 0 0; }
         .top-btn {
             background: transparent;
-            border: 1px solid var(--glass-border);
+            border: var(--drop-border);
             border-radius: 30px;
             padding: 8px 16px;
             font-size: 0.85rem;
             cursor: pointer;
             color: var(--text-color);
-            box-shadow: var(--glass-shadow);
             backdrop-filter: blur(0px);
             -webkit-backdrop-filter: blur(0px);
+            box-shadow: var(--drop-shadow);
             transition: all 0.3s ease;
             font-family: inherit;
             text-shadow: var(--text-shadow);
         }
-        .top-btn:hover {
-            box-shadow: var(--glass-shadow-hover);
-            transform: translateY(-1px);
-        }
+        .top-btn:hover { box-shadow: var(--drop-shadow-hover); }
 
-        /* 液体玻璃卡片基类 */
-        .liquid-card {
+        /* 水滴透明卡片 */
+        .drop-card {
             position: relative;
             background: transparent;
             border-radius: var(--radius);
-            border: none;
-            box-shadow: var(--glass-shadow);
-            backdrop-filter: blur(var(--blur));
-            -webkit-backdrop-filter: blur(var(--blur));
+            border: var(--drop-border);
+            backdrop-filter: blur(0px);
+            -webkit-backdrop-filter: blur(0px);
+            box-shadow: var(--drop-shadow);
             overflow: hidden;
-            transition: box-shadow 0.3s ease, transform 0.2s ease;
+            transition: all 0.35s ease;
         }
-        .liquid-card:hover {
-            box-shadow: var(--glass-shadow-hover);
-            transform: translateY(-1px);
+        .drop-card:hover {
+            border-color: rgba(255,255,255,0.6);
+            box-shadow: var(--drop-shadow-hover);
         }
-        /* 液体流动伪元素 */
-        .liquid-card::before {
+        /* 水滴顶部高光点 */
+        .drop-card::after {
             content: '';
             position: absolute;
-            inset: -2px;
-            border-radius: inherit;
-            background: radial-gradient(circle at 30% 30%, var(--liquid-color-1) 0%, var(--liquid-color-2) 50%, rgba(255,255,255,0) 80%);
-            mix-blend-mode: overlay;
-            opacity: 0.5;
-            filter: blur(6px);
-            z-index: 0;
-            pointer-events: none;
-            animation: liquidFlow 7s ease-in-out infinite alternate;
-            transition: opacity 0.3s;
-        }
-        .liquid-card:hover::before {
-            opacity: 0.75;
-            animation-duration: 4s;
-            filter: blur(4px);
-        }
-        /* 固定高光反射 */
-        .liquid-card::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            border-radius: inherit;
-            background: linear-gradient(145deg, rgba(255,255,255,0.45) 0%, transparent 35%, transparent 70%, rgba(255,255,255,0.1) 100%);
+            top: 6px; left: 50%;
+            transform: translateX(-50%);
+            width: 40%;
+            height: 4px;
+            border-radius: 4px;
+            background: rgba(255,255,255,0.7);
             z-index: 2;
             pointer-events: none;
-            mix-blend-mode: soft-light;
+            filter: blur(1px);
+            transition: opacity 0.3s;
         }
-
-        @keyframes liquidFlow {
-            0% { background: radial-gradient(circle at 20% 30%, var(--liquid-color-1) 0%, var(--liquid-color-2) 45%, rgba(255,255,255,0) 80%); }
-            30% { background: radial-gradient(circle at 75% 55%, var(--liquid-color-1) 0%, var(--liquid-color-2) 50%, rgba(255,255,255,0) 85%); }
-            60% { background: radial-gradient(circle at 30% 75%, var(--liquid-color-1) 0%, var(--liquid-color-2) 45%, rgba(255,255,255,0) 80%); }
-            100% { background: radial-gradient(circle at 65% 20%, var(--liquid-color-1) 0%, var(--liquid-color-2) 50%, rgba(255,255,255,0) 85%); }
-        }
+        .drop-card:hover::after { opacity: 0.9; }
 
         .hero { margin: 32px 0; }
         .hero-card {
@@ -165,13 +137,13 @@
             background: rgba(255,255,255,0.2); color: var(--text-color);
             display: flex; align-items: center; justify-content: center;
             font-size: 2.5rem; font-weight: 500; flex-shrink: 0; overflow: hidden;
-            border: 1px solid var(--glass-border);
-            box-shadow: var(--glass-shadow);
+            border: var(--drop-border);
+            box-shadow: var(--drop-shadow);
         }
         .avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
-        .hero-text { flex: 1; min-width: 260px; position: relative; z-index: 3; }
+        .hero-text { flex: 1; min-width: 260px; }
         .hero-text h1 { font-size: 2rem; font-weight: 600; color: var(--text-color); text-shadow: var(--text-shadow); }
-        .hero-text .tagline { font-size: 1rem; color: var(--text-color); opacity: 0.8; margin: 8px 0 16px; text-shadow: var(--text-shadow); }
+        .hero-text .tagline { font-size: 1rem; opacity: 0.85; margin: 8px 0 16px; text-shadow: var(--text-shadow); }
         .github-stats { display: flex; flex-wrap: wrap; gap: 18px; margin: 16px 0; font-size: 0.95rem; }
         .github-stat { display: flex; align-items: center; gap: 4px; color: var(--text-color); text-shadow: var(--text-shadow); }
         .stat-number { font-weight: 700; }
@@ -179,34 +151,31 @@
         .design-badge {
             display: inline-flex; align-items: center; gap: 6px;
             padding: 8px 18px; border-radius: 30px;
-            background: transparent; border: 1px solid var(--glass-border);
+            background: transparent; border: var(--drop-border);
             color: var(--text-color); font-size: 0.85rem; font-weight: 500;
-            box-shadow: var(--glass-shadow); backdrop-filter: blur(0px);
             text-shadow: var(--text-shadow);
+            box-shadow: var(--drop-shadow);
         }
         .social-links { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 20px; }
         .social-link {
             display: inline-flex; align-items: center; gap: 6px;
             padding: 8px 18px; border-radius: 30px;
-            background: transparent; border: 1px solid var(--glass-border);
+            background: transparent; border: var(--drop-border);
             color: var(--text-color); text-decoration: none; font-size: 0.85rem;
-            font-weight: 500; box-shadow: var(--glass-shadow);
-            transition: all 0.3s ease; text-shadow: var(--text-shadow);
+            font-weight: 500; transition: all 0.3s ease; text-shadow: var(--text-shadow);
+            box-shadow: var(--drop-shadow);
         }
-        .social-link:hover {
-            box-shadow: var(--glass-shadow-hover);
-            transform: translateY(-1px);
-        }
+        .social-link:hover { box-shadow: var(--drop-shadow-hover); }
 
         .quick-entry { margin: 30px 0; }
         .quick-entry-card {
             display: flex; align-items: center; justify-content: space-between;
             padding: 18px 24px; text-decoration: none; color: inherit;
         }
-        .quick-entry-info { display: flex; flex-direction: column; gap: 4px; position: relative; z-index: 3; }
+        .quick-entry-info { display: flex; flex-direction: column; gap: 4px; }
         .quick-entry-title { font-size: 1.3rem; font-weight: 600; color: var(--text-color); text-shadow: var(--text-shadow); }
-        .quick-entry-desc { font-size: 0.9rem; color: var(--text-color); opacity: 0.7; text-shadow: var(--text-shadow); }
-        .quick-entry-arrow { font-size: 1.5rem; color: var(--text-color); transition: transform 0.3s ease; position: relative; z-index: 3; }
+        .quick-entry-desc { font-size: 0.9rem; opacity: 0.8; text-shadow: var(--text-shadow); }
+        .quick-entry-arrow { font-size: 1.5rem; transition: transform 0.3s ease; }
         .quick-entry-card:hover .quick-entry-arrow { transform: translateX(5px); }
 
         .repos-section { margin: 40px 0; }
@@ -214,36 +183,32 @@
         .repos-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
         .repo-card {
             background: transparent; border-radius: 24px;
-            border: none; box-shadow: var(--glass-shadow);
-            backdrop-filter: blur(0px); padding: 20px;
-            display: flex; flex-direction: column; gap: 12px;
-            transition: box-shadow 0.3s, transform 0.2s;
+            border: var(--drop-border);
+            box-shadow: var(--drop-shadow);
+            padding: 20px; display: flex; flex-direction: column; gap: 12px;
+            transition: all 0.35s ease;
             position: relative; overflow: hidden;
         }
-        .repo-card:hover {
-            box-shadow: var(--glass-shadow-hover);
-            transform: translateY(-1px);
-        }
-        .repo-card::before {
-            content: ''; position: absolute; inset: -2px; border-radius: inherit;
-            background: radial-gradient(circle at 30% 30%, var(--liquid-color-1) 0%, var(--liquid-color-2) 50%, rgba(255,255,255,0) 80%);
-            mix-blend-mode: overlay; opacity: 0.4; filter: blur(6px); z-index: 0;
-            pointer-events: none; animation: liquidFlow 8s ease-in-out infinite alternate;
-        }
+        .repo-card:hover { box-shadow: var(--drop-shadow-hover); }
         .repo-card::after {
-            content: ''; position: absolute; inset: 0; border-radius: inherit;
-            background: linear-gradient(145deg, rgba(255,255,255,0.3) 0%, transparent 35%, transparent 70%, rgba(255,255,255,0.05) 100%);
-            z-index: 2; pointer-events: none; mix-blend-mode: soft-light;
+            content: '';
+            position: absolute;
+            top: 4px; left: 50%; transform: translateX(-50%);
+            width: 30%; height: 3px;
+            border-radius: 3px;
+            background: rgba(255,255,255,0.6);
+            z-index: 2; pointer-events: none;
+            filter: blur(1px);
         }
-        .repo-card > * { position: relative; z-index: 3; }
+        .repo-card > * { position: relative; z-index: 1; }
         .repo-name { font-size: 1.1rem; font-weight: 600; color: var(--text-color); text-decoration: none; }
         .repo-name:hover { text-decoration: underline; }
-        .repo-desc { font-size: 0.85rem; color: var(--text-color); opacity: 0.7; line-height: 1.5; flex: 1; }
-        .repo-meta { display: flex; flex-wrap: wrap; gap: 12px; font-size: 0.75rem; color: var(--text-color); opacity: 0.6; }
+        .repo-desc { font-size: 0.85rem; opacity: 0.8; line-height: 1.5; flex: 1; }
+        .repo-meta { display: flex; flex-wrap: wrap; gap: 12px; font-size: 0.75rem; opacity: 0.7; }
         .language-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
         .site-link { color: inherit; text-decoration: none; font-size: 0.8rem; }
 
-        .footer { text-align: center; padding: 32px; color: var(--text-color); opacity: 0.6; font-size: 0.8rem; }
+        .footer { text-align: center; padding: 32px; opacity: 0.6; font-size: 0.8rem; }
         .footer a { color: inherit; }
 
         @media (max-width: 600px) {
@@ -253,7 +218,6 @@
     </style>
 </head>
 <body>
-    <!-- 视频背景（新增，静音循环播放） -->
     <video class="video-bg-layer" id="bgVideo" autoplay muted loop playsinline>
         <source src="background.mp4" type="video/mp4">
     </video>
@@ -268,7 +232,7 @@
         </div>
 
         <section class="hero">
-            <div class="liquid-card hero-card">
+            <div class="drop-card hero-card">
                 <div class="avatar">
                     <img src="avatar.png" alt="FoodUI" onerror="this.style.display='none'; document.getElementById('avatarFallback').style.display='flex';">
                     <span id="avatarFallback" style="display:none; width:100%; height:100%; align-items:center; justify-content:center; font-size:2.5rem;">🍜</span>
@@ -296,7 +260,7 @@
         </section>
 
         <section class="quick-entry">
-            <a href="https://foodui.github.io/foodhub/" target="_blank" class="liquid-card quick-entry-card">
+            <a href="https://foodui.github.io/foodhub/" target="_blank" class="drop-card quick-entry-card">
                 <div class="quick-entry-info">
                     <div class="quick-entry-title">📁 FoodHub</div>
                     <div class="quick-entry-desc" id="foodhubDesc">配置文件与网盘资源分享站</div>
@@ -455,30 +419,18 @@
             }).join('');
         }
 
-        // 视频背景回退逻辑（新增）
         const video = document.getElementById('bgVideo');
         if (video) {
-            video.addEventListener('loadeddata', function() {
-                if (video.videoWidth > 0 && video.videoHeight > 0) {
-                    video.classList.remove('hidden');
-                } else {
-                    video.classList.add('hidden');
-                }
+            video.addEventListener('loadeddata', () => {
+                if (video.videoWidth > 0 && video.videoHeight > 0) video.classList.remove('hidden');
+                else video.classList.add('hidden');
             });
-            video.addEventListener('error', function() {
+            video.addEventListener('error', () => video.classList.add('hidden'));
+            if (video.readyState >= 2 && (video.videoWidth === 0 && video.videoHeight === 0)) {
                 video.classList.add('hidden');
-            });
-            // 初始检查
-            if (video.readyState >= 2) {
-                if (video.videoWidth === 0 && video.videoHeight === 0) {
-                    video.classList.add('hidden');
-                }
             } else {
-                // 等待一段时间后检查
-                setTimeout(function() {
-                    if (video.readyState < 2 || (video.videoWidth === 0 && video.videoHeight === 0)) {
-                        video.classList.add('hidden');
-                    }
+                setTimeout(() => {
+                    if (video.readyState < 2 || (video.videoWidth === 0 && video.videoHeight === 0)) video.classList.add('hidden');
                 }, 3000);
             }
         }
