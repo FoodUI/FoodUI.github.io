@@ -3,65 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FoodUI的Github小站</title>
+    <title>FoodUI · 透明液体玻璃</title>
     <meta name="description" content="FoodUI 的个人主页 — 我的世界玩家，尝试新奇事物。">
     <meta name="author" content="FoodUI">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍜</text></svg>">
     <style>
         :root {
-            --primary: #0066ff;
-            --on-primary: #ffffff;
-            --primary-container: #dceeff;
-            --on-primary-container: #001b3d;
-            --secondary: #546e7a;
-            --secondary-container: #cfd8dc;
-            --on-secondary-container: #0a1c24;
-            --surface: #f6faff;
-            --on-surface: #ffffff;
-            --surface-variant: rgba(224, 227, 235, 0.05);
-            --on-surface-variant: #f0f0f0;
-            --outline: #70757c;
-            --outline-variant: rgba(255,255,255,0.15);
-            --background: #f6faff;
-            --on-background: #1a1c1e;
-            /* 极致高透玻璃 */
-            --glass-bg: rgba(255, 255, 255, 0.06);
-            --glass-border: rgba(255, 255, 255, 0.15);
-            --glass-shadow: 0 10px 30px rgba(0,0,0,0.05);
-            --text-shadow: 0 1px 8px rgba(0,0,0,0.7);
-            --radius-full: 9999px;
-            --radius-lg: 28px;
-            --transition: 0.25s cubic-bezier(0.2,0,0,1);
-            --font: 'Google Sans', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            --text-color: #2c2c2c;
+            --text-shadow: 0 1px 2px rgba(255,255,255,0.8);
+            --glass-border: rgba(255, 255, 255, 0.35);
+            --glass-shadow: 0 2px 8px rgba(0,0,0,0.04), inset 0 0 0 1px rgba(255,255,255,0.35);
+            --glass-shadow-hover: 0 6px 16px rgba(0,0,0,0.06), inset 0 0 0 1px rgba(255,255,255,0.55);
+            --liquid-color-1: rgba(255,255,255,0.2);
+            --liquid-color-2: rgba(255,255,255,0.06);
+            --radius: 28px;
+            --blur: 0px;
+            --font: 'PingFang SC', 'Microsoft YaHei', 'Helvetica Neue', sans-serif;
         }
 
         [data-theme="dark"] {
-            --primary: #80bfff;
-            --on-primary: #003166;
-            --primary-container: #004899;
-            --on-primary-container: #dceeff;
-            --secondary: #b0bec5;
-            --secondary-container: #37474f;
-            --on-secondary-container: #cfd8dc;
-            --surface: #1a1c1e;
-            --on-surface: #ffffff;
-            --surface-variant: rgba(66, 71, 78, 0.05);
-            --on-surface-variant: #e0e0e0;
-            --outline: #8a8f94;
-            --outline-variant: rgba(255,255,255,0.08);
-            --background: #1a1c1e;
-            --on-background: #e2e2e6;
-            --glass-bg: rgba(20, 20, 25, 0.06);
-            --glass-border: rgba(255,255,255,0.08);
-            --glass-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            --text-shadow: 0 1px 8px rgba(0,0,0,0.8);
+            --text-color: #e8e8e8;
+            --text-shadow: 0 1px 3px rgba(0,0,0,0.6);
+            --glass-border: rgba(255, 255, 255, 0.15);
+            --glass-shadow: 0 2px 8px rgba(0,0,0,0.15), inset 0 0 0 1px rgba(255,255,255,0.15);
+            --glass-shadow-hover: 0 6px 16px rgba(0,0,0,0.25), inset 0 0 0 1px rgba(255,255,255,0.25);
+            --liquid-color-1: rgba(255,255,255,0.1);
+            --liquid-color-2: rgba(255,255,255,0.03);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
             font-family: var(--font);
-            background: var(--background);
-            color: var(--on-background);
+            background-color: #F3F3F3;
+            color: var(--text-color);
             line-height: 1.6;
             min-height: 100vh;
             transition: background 0.3s, color 0.3s;
@@ -69,22 +43,22 @@
             overflow-x: hidden;
         }
 
-        .video-bg {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            object-fit: cover; z-index: -2;
+        /* 网格背景 (浅色) 或深色纯色 */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            z-index: -2;
+            background-color: #F3F3F3;
+            background-image:
+                linear-gradient(0deg, transparent 24%, #dbdbdb 25%, #dbdbdb 26%, transparent 27%, transparent 74%, #dbdbdb 75%, #dbdbdb 76%, transparent 77%, transparent),
+                linear-gradient(90deg, transparent 24%, #dbdbdb 25%, #dbdbdb 26%, transparent 27%, transparent 74%, #dbdbdb 75%, #dbdbdb 76%, transparent 77%, transparent);
+            background-size: 50px 50px;
         }
-        .gradient-bg {
-            position: fixed; top: -50%; left: -50%; width: 200%; height: 200%; z-index: -3;
-            background: radial-gradient(circle at 30% 40%, var(--primary-container) 0%, transparent 30%),
-                        radial-gradient(circle at 70% 60%, var(--secondary-container) 0%, transparent 35%),
-                        radial-gradient(circle at 50% 80%, var(--surface-variant) 0%, transparent 40%);
-            animation: bgFloat 20s ease-in-out infinite alternate;
-        }
-        @keyframes bgFloat {
-            0% { transform: translate(0,0) rotate(0deg) scale(1); }
-            33% { transform: translate(2%,-1%) rotate(1deg) scale(1.02); }
-            66% { transform: translate(-1%,2%) rotate(-1deg) scale(0.98); }
-            100% { transform: translate(1%,-2%) rotate(0.5deg) scale(1.01); }
+
+        [data-theme="dark"] body::before {
+            background: #1c1c1e;
+            background-image: none;
         }
 
         .container { max-width: 960px; margin: 0 auto; padding: 0 20px; position: relative; z-index: 1; }
@@ -93,105 +67,181 @@
             display: flex; justify-content: flex-end; gap: 12px; padding: 20px 0 0;
         }
         .top-btn {
-            background: var(--glass-bg); border: 1px solid var(--glass-border);
-            border-radius: var(--radius-full); padding: 8px 16px; font-size: 0.85rem;
-            cursor: pointer; color: var(--on-surface); box-shadow: var(--glass-shadow);
-            transition: all var(--transition); backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px);
-            font-family: inherit;
-        }
-        .top-btn:hover { background: rgba(255,255,255,0.1); }
-
-        .glass {
-            background: var(--glass-bg); border-radius: var(--radius-lg);
+            background: transparent;
             border: 1px solid var(--glass-border);
-            box-shadow: 0 0 0 1px rgba(255,255,255,0.08) inset, 0 0 15px rgba(255,255,255,0.05), var(--glass-shadow);
-            transition: all 0.4s cubic-bezier(0.2,0.8,0.4,1);
+            border-radius: 30px;
+            padding: 8px 16px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            color: var(--text-color);
+            box-shadow: var(--glass-shadow);
+            backdrop-filter: blur(0px);
+            -webkit-backdrop-filter: blur(0px);
+            transition: all 0.3s ease;
+            font-family: inherit;
+            text-shadow: var(--text-shadow);
         }
-        .glass:hover {
-            border-color: rgba(255,255,255,0.2);
-            box-shadow: 0 0 20px rgba(255,255,255,0.1), 0 15px 30px rgba(0,0,0,0.1);
+        .top-btn:hover {
+            box-shadow: var(--glass-shadow-hover);
+            transform: translateY(-1px);
+        }
+
+        /* 液体玻璃卡片基类 */
+        .liquid-card {
+            position: relative;
+            background: transparent;
+            border-radius: var(--radius);
+            border: none;
+            box-shadow: var(--glass-shadow);
+            backdrop-filter: blur(var(--blur));
+            -webkit-backdrop-filter: blur(var(--blur));
+            overflow: hidden;
+            transition: box-shadow 0.3s ease, transform 0.2s ease;
+        }
+        .liquid-card:hover {
+            box-shadow: var(--glass-shadow-hover);
+            transform: translateY(-1px);
+        }
+        /* 液体流动伪元素 */
+        .liquid-card::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            border-radius: inherit;
+            background: radial-gradient(circle at 30% 30%, var(--liquid-color-1) 0%, var(--liquid-color-2) 50%, rgba(255,255,255,0) 80%);
+            mix-blend-mode: overlay;
+            opacity: 0.5;
+            filter: blur(6px);
+            z-index: 0;
+            pointer-events: none;
+            animation: liquidFlow 7s ease-in-out infinite alternate;
+            transition: opacity 0.3s;
+        }
+        .liquid-card:hover::before {
+            opacity: 0.75;
+            animation-duration: 4s;
+            filter: blur(4px);
+        }
+        /* 固定高光反射 */
+        .liquid-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            background: linear-gradient(145deg, rgba(255,255,255,0.45) 0%, transparent 35%, transparent 70%, rgba(255,255,255,0.1) 100%);
+            z-index: 2;
+            pointer-events: none;
+            mix-blend-mode: soft-light;
+        }
+
+        @keyframes liquidFlow {
+            0% { background: radial-gradient(circle at 20% 30%, var(--liquid-color-1) 0%, var(--liquid-color-2) 45%, rgba(255,255,255,0) 80%); }
+            30% { background: radial-gradient(circle at 75% 55%, var(--liquid-color-1) 0%, var(--liquid-color-2) 50%, rgba(255,255,255,0) 85%); }
+            60% { background: radial-gradient(circle at 30% 75%, var(--liquid-color-1) 0%, var(--liquid-color-2) 45%, rgba(255,255,255,0) 80%); }
+            100% { background: radial-gradient(circle at 65% 20%, var(--liquid-color-1) 0%, var(--liquid-color-2) 50%, rgba(255,255,255,0) 85%); }
         }
 
         .hero { margin: 32px 0; }
         .hero-card {
-            padding: 32px; display: flex; flex-wrap: wrap; gap: 24px; align-items: center;
+            padding: 32px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 24px;
+            align-items: center;
         }
         .avatar {
-            width: 96px; height: 96px; border-radius: 50%; background: var(--primary-container);
-            color: var(--on-primary-container); display: flex; align-items: center; justify-content: center;
+            width: 96px; height: 96px; border-radius: 50%;
+            background: rgba(255,255,255,0.2); color: var(--text-color);
+            display: flex; align-items: center; justify-content: center;
             font-size: 2.5rem; font-weight: 500; flex-shrink: 0; overflow: hidden;
-            border: 2px solid rgba(255,255,255,0.4); box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--glass-shadow);
         }
         .avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
-        .hero-text { flex: 1; min-width: 260px; }
-        .hero-text h1 { font-size: 2rem; font-weight: 700; color: var(--on-surface); text-shadow: var(--text-shadow); }
-        .hero-text .tagline { font-size: 1rem; color: var(--on-surface-variant); margin: 8px 0 16px; text-shadow: var(--text-shadow); }
+        .hero-text { flex: 1; min-width: 260px; position: relative; z-index: 3; }
+        .hero-text h1 { font-size: 2rem; font-weight: 600; color: var(--text-color); text-shadow: var(--text-shadow); }
+        .hero-text .tagline { font-size: 1rem; color: var(--text-color); opacity: 0.8; margin: 8px 0 16px; text-shadow: var(--text-shadow); }
         .github-stats { display: flex; flex-wrap: wrap; gap: 18px; margin: 16px 0; font-size: 0.95rem; }
-        .github-stat { display: flex; align-items: center; gap: 4px; color: var(--on-surface-variant); text-shadow: var(--text-shadow); }
-        .stat-number { font-weight: 700; color: var(--primary); text-shadow: 0 1px 4px rgba(0,0,0,0.4); }
+        .github-stat { display: flex; align-items: center; gap: 4px; color: var(--text-color); text-shadow: var(--text-shadow); }
+        .stat-number { font-weight: 700; }
         .design-philosophy { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 16px; }
         .design-badge {
-            display: inline-flex; align-items: center; gap: 6px; padding: 8px 18px;
-            border-radius: var(--radius-full); background: var(--glass-bg);
-            color: var(--on-surface); font-size: 0.85rem; font-weight: 500;
-            backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px);
-            text-shadow: var(--text-shadow); border: 1px solid var(--glass-border);
+            display: inline-flex; align-items: center; gap: 6px;
+            padding: 8px 18px; border-radius: 30px;
+            background: transparent; border: 1px solid var(--glass-border);
+            color: var(--text-color); font-size: 0.85rem; font-weight: 500;
+            box-shadow: var(--glass-shadow); backdrop-filter: blur(0px);
+            text-shadow: var(--text-shadow);
         }
         .social-links { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 20px; }
         .social-link {
-            display: inline-flex; align-items: center; gap: 6px; padding: 8px 18px;
-            border-radius: var(--radius-full); background: var(--glass-bg);
-            color: var(--on-surface); text-decoration: none; font-size: 0.85rem; font-weight: 500;
-            transition: background var(--transition); backdrop-filter: blur(5px);
-            -webkit-backdrop-filter: blur(5px); border: 1px solid var(--glass-border);
-            text-shadow: var(--text-shadow);
+            display: inline-flex; align-items: center; gap: 6px;
+            padding: 8px 18px; border-radius: 30px;
+            background: transparent; border: 1px solid var(--glass-border);
+            color: var(--text-color); text-decoration: none; font-size: 0.85rem;
+            font-weight: 500; box-shadow: var(--glass-shadow);
+            transition: all 0.3s ease; text-shadow: var(--text-shadow);
         }
-        .social-link:hover { background: var(--primary); color: white; }
+        .social-link:hover {
+            box-shadow: var(--glass-shadow-hover);
+            transform: translateY(-1px);
+        }
 
         .quick-entry { margin: 30px 0; }
         .quick-entry-card {
             display: flex; align-items: center; justify-content: space-between;
             padding: 18px 24px; text-decoration: none; color: inherit;
         }
-        .quick-entry-info { display: flex; flex-direction: column; gap: 4px; }
-        .quick-entry-title { font-size: 1.3rem; font-weight: 700; color: var(--on-surface); text-shadow: var(--text-shadow); }
-        .quick-entry-desc { font-size: 0.9rem; color: var(--on-surface-variant); text-shadow: var(--text-shadow); }
-        .quick-entry-arrow { font-size: 1.5rem; color: var(--primary); transition: transform var(--transition); }
+        .quick-entry-info { display: flex; flex-direction: column; gap: 4px; position: relative; z-index: 3; }
+        .quick-entry-title { font-size: 1.3rem; font-weight: 600; color: var(--text-color); text-shadow: var(--text-shadow); }
+        .quick-entry-desc { font-size: 0.9rem; color: var(--text-color); opacity: 0.7; text-shadow: var(--text-shadow); }
+        .quick-entry-arrow { font-size: 1.5rem; color: var(--text-color); transition: transform 0.3s ease; position: relative; z-index: 3; }
         .quick-entry-card:hover .quick-entry-arrow { transform: translateX(5px); }
 
         .repos-section { margin: 40px 0; }
-        .section-title { font-size: 1.5rem; font-weight: 700; margin-bottom: 20px; color: var(--on-surface); text-shadow: var(--text-shadow); display: flex; align-items: center; gap: 10px; }
+        .section-title { font-size: 1.5rem; font-weight: 600; margin-bottom: 20px; color: var(--text-color); text-shadow: var(--text-shadow); }
         .repos-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
         .repo-card {
-            background: var(--glass-bg); backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px);
-            border-radius: 24px; border: 1px solid var(--glass-border); padding: 20px;
-            display: flex; flex-direction: column; gap: 12px; transition: box-shadow 0.2s;
-            box-shadow: var(--glass-shadow); color: var(--on-surface);
+            background: transparent; border-radius: 24px;
+            border: none; box-shadow: var(--glass-shadow);
+            backdrop-filter: blur(0px); padding: 20px;
+            display: flex; flex-direction: column; gap: 12px;
+            transition: box-shadow 0.3s, transform 0.2s;
+            position: relative; overflow: hidden;
         }
-        .repo-card:hover { box-shadow: var(--glass-shadow), 0 8px 20px rgba(0,0,0,0.1); }
-        .repo-name { font-size: 1.1rem; font-weight: 700; color: var(--primary); text-decoration: none; }
+        .repo-card:hover {
+            box-shadow: var(--glass-shadow-hover);
+            transform: translateY(-1px);
+        }
+        .repo-card::before {
+            content: ''; position: absolute; inset: -2px; border-radius: inherit;
+            background: radial-gradient(circle at 30% 30%, var(--liquid-color-1) 0%, var(--liquid-color-2) 50%, rgba(255,255,255,0) 80%);
+            mix-blend-mode: overlay; opacity: 0.4; filter: blur(6px); z-index: 0;
+            pointer-events: none; animation: liquidFlow 8s ease-in-out infinite alternate;
+        }
+        .repo-card::after {
+            content: ''; position: absolute; inset: 0; border-radius: inherit;
+            background: linear-gradient(145deg, rgba(255,255,255,0.3) 0%, transparent 35%, transparent 70%, rgba(255,255,255,0.05) 100%);
+            z-index: 2; pointer-events: none; mix-blend-mode: soft-light;
+        }
+        .repo-card > * { position: relative; z-index: 3; }
+        .repo-name { font-size: 1.1rem; font-weight: 600; color: var(--text-color); text-decoration: none; }
         .repo-name:hover { text-decoration: underline; }
-        .repo-desc { font-size: 0.85rem; color: var(--on-surface-variant); text-shadow: var(--text-shadow); line-height: 1.5; flex: 1; }
-        .repo-meta { display: flex; flex-wrap: wrap; gap: 12px; font-size: 0.75rem; color: var(--on-surface-variant); }
+        .repo-desc { font-size: 0.85rem; color: var(--text-color); opacity: 0.7; line-height: 1.5; flex: 1; }
+        .repo-meta { display: flex; flex-wrap: wrap; gap: 12px; font-size: 0.75rem; color: var(--text-color); opacity: 0.6; }
         .language-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+        .site-link { color: inherit; text-decoration: none; font-size: 0.8rem; }
 
-        .footer { text-align: center; padding: 32px; color: var(--on-surface-variant); font-size: 0.8rem; text-shadow: var(--text-shadow); }
-        .footer a { color: var(--primary); }
+        .footer { text-align: center; padding: 32px; color: var(--text-color); opacity: 0.6; font-size: 0.8rem; }
+        .footer a { color: inherit; }
 
         @media (max-width: 600px) {
             .hero-card { flex-direction: column; text-align: center; }
-            .design-philosophy { justify-content: center; }
-            .social-links { justify-content: center; }
-            .github-stats { justify-content: center; }
+            .design-philosophy, .social-links, .github-stats { justify-content: center; }
         }
     </style>
 </head>
 <body>
-    <video class="video-bg" id="bgVideo" autoplay muted loop playsinline>
-        <source src="background.mp4" type="video/mp4">
-    </video>
-    <div class="gradient-bg" id="bgGradient"></div>
-
     <div class="container">
         <div class="top-bar">
             <select id="langSelect" class="top-btn">
@@ -202,7 +252,7 @@
         </div>
 
         <section class="hero">
-            <div class="hero-card glass">
+            <div class="liquid-card hero-card">
                 <div class="avatar">
                     <img src="avatar.png" alt="FoodUI" onerror="this.style.display='none'; document.getElementById('avatarFallback').style.display='flex';">
                     <span id="avatarFallback" style="display:none; width:100%; height:100%; align-items:center; justify-content:center; font-size:2.5rem;">🍜</span>
@@ -230,7 +280,7 @@
         </section>
 
         <section class="quick-entry">
-            <a href="https://foodui.github.io/foodhub/" target="_blank" class="quick-entry-card glass">
+            <a href="https://foodui.github.io/foodhub/" target="_blank" class="liquid-card quick-entry-card">
                 <div class="quick-entry-info">
                     <div class="quick-entry-title">📁 FoodHub</div>
                     <div class="quick-entry-desc" id="foodhubDesc">配置文件与网盘资源分享站</div>
@@ -242,7 +292,7 @@
         <section class="repos-section">
             <h2 class="section-title" id="reposTitle">📦 我的仓库</h2>
             <div class="repos-grid" id="reposContainer">
-                <div style="color:var(--on-surface-variant); padding: 20px; text-shadow:var(--text-shadow);">正在加载仓库数据...</div>
+                <div style="color:var(--text-color); opacity:0.6; padding:20px;">正在加载仓库数据...</div>
             </div>
         </section>
 
@@ -265,7 +315,6 @@
                 error: '⚠️ 无法加载仓库，请稍后再试',
                 noRepos: '还没有公开仓库哦～',
                 noDesc: '暂无描述',
-                footer: '© FoodUI · 由 <a href="https://deepseek.com" target="_blank">DeepSeek</a> 生成',
                 statRepo: '仓库', statFollowers: '粉丝', statFollowing: '关注'
             },
             en: {
@@ -278,7 +327,6 @@
                 error: '⚠️ Failed to load repositories.',
                 noRepos: 'No public repositories yet~',
                 noDesc: 'No description',
-                footer: '© FoodUI · Generated by <a href="https://deepseek.com" target="_blank">DeepSeek</a>',
                 statRepo: 'Repos', statFollowers: 'Followers', statFollowing: 'Following'
             }
         };
@@ -292,7 +340,6 @@
             document.querySelectorAll('.design-badge').forEach((el, i) => el.textContent = t('badges')[i] || el.textContent);
             document.getElementById('foodhubDesc').textContent = t('foodhubDesc');
             document.getElementById('reposTitle').textContent = t('reposTitle');
-            document.getElementById('footerText').innerHTML = t('footer');
             const units = document.querySelectorAll('.stat-unit');
             if (units.length >= 3) {
                 units[0].textContent = t('statRepo');
@@ -349,7 +396,7 @@
 
         async function fetchRepos() {
             const container = document.getElementById('reposContainer');
-            container.innerHTML = `<div style="color:var(--on-surface-variant); text-shadow:var(--text-shadow);">${t('loading')}</div>`;
+            container.innerHTML = `<div style="color:var(--text-color); opacity:0.6;">${t('loading')}</div>`;
             try {
                 const res = await fetch('https://api.github.com/users/FoodUI/repos?sort=updated&per_page=100');
                 if (!res.ok) throw new Error();
@@ -359,19 +406,19 @@
                 filtered.forEach((r, i) => r.hasPages = checks[i].status === 'fulfilled' && checks[i].value === true);
                 renderRepos(filtered);
             } catch(e) {
-                container.innerHTML = `<div style="color:var(--on-surface-variant); text-shadow:var(--text-shadow);">${t('error')}</div>`;
+                container.innerHTML = `<div style="color:var(--text-color); opacity:0.6;">${t('error')}</div>`;
             }
         }
 
         function renderRepos(repos) {
             const container = document.getElementById('reposContainer');
             if (!repos.length) {
-                container.innerHTML = `<div style="color:var(--on-surface-variant); text-shadow:var(--text-shadow);">${t('noRepos')}</div>`;
+                container.innerHTML = `<div style="color:var(--text-color); opacity:0.6;">${t('noRepos')}</div>`;
                 return;
             }
             container.innerHTML = repos.map(repo => {
                 const siteUrl = `https://FoodUI.github.io/${repo.name}/`;
-                const siteIcon = repo.hasPages ? `<a href="${siteUrl}" target="_blank" style="color:var(--primary); text-decoration:none; font-size:0.8rem;" title="网站">🌐</a>` : '';
+                const siteIcon = repo.hasPages ? `<a href="${siteUrl}" target="_blank" class="site-link" title="网站">🌐</a>` : '';
                 const langColor = {
                     'JavaScript':'#f7df1e','TypeScript':'#3178c6','Python':'#3572A5','Java':'#b07219','C++':'#f34b7d','C#':'#178600','Go':'#00ADD8','Rust':'#dea584','Kotlin':'#A97BFF','Swift':'#ffac45','Dart':'#00B4AB'
                 }[repo.language] || '#858585';
@@ -392,17 +439,9 @@
             }).join('');
         }
 
-        // 初始化
         applyLang();
         fetchGitHubProfile();
         fetchRepos();
-
-        // 背景视频回退
-        const video = document.getElementById('bgVideo');
-        const gradient = document.getElementById('bgGradient');
-        video.addEventListener('loadeddata', () => { gradient.style.display = 'none'; });
-        video.addEventListener('error', () => { video.style.display = 'none'; gradient.style.display = 'block'; });
-        if (video.readyState < 2) { video.style.display = 'none'; gradient.style.display = 'block'; }
     })();
     </script>
 </body>
