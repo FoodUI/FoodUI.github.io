@@ -3,34 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FoodUI · 玻璃质感</title>
+    <title>FoodUI · 轻量透明玻璃</title>
     <meta name="description" content="FoodUI 的个人主页 — 我的世界玩家，尝试新奇事物。">
     <meta name="author" content="FoodUI">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍜</text></svg>">
     <style>
         :root {
             --text-color: #3e3e3e;
-            --text-shadow: 0 1px 4px rgba(255,255,255,0.8);
-            /* 玻璃卡片变量 */
-            --glass-bg: rgba(255, 255, 255, 0.04);
-            --glass-border: 1px double rgba(51, 51, 51, 0.08);
-            --glass-shadow: 
-                inset 2px -2px 1px -1px rgba(255, 255, 255, 0.9),
-                inset -2px 2px 1px -1px rgba(255, 255, 255, 0.9),
-                inset 6px -6px 1px -6px rgba(255, 255, 255, 0.55),
-                inset -6px 6px 1px -6px rgba(255, 255, 255, 0.55),
-                inset 0 0 2px rgba(0, 0, 0, 0.8),
-                0 4px 8px rgba(0, 0, 0, 0.2);
-            --glass-shadow-hover: 
-                inset 2px -2px 1px -1px rgba(255, 255, 255, 0.95),
-                inset -2px 2px 1px -1px rgba(255, 255, 255, 0.95),
-                inset 6px -6px 1px -6px rgba(255, 255, 255, 0.65),
-                inset -6px 6px 1px -6px rgba(255, 255, 255, 0.65),
-                inset 0 0 2px rgba(0, 0, 0, 0.9),
-                0 6px 12px rgba(0, 0, 0, 0.25);
-            --glass-brightness: 0.9;
-            --glass-blur: 2px;
-            --glass-highlight-tr: 25%;
+            --text-shadow: 0 1px 3px rgba(255,255,255,0.7);
+            --glass-bg: transparent;
+            --glass-border: 1px solid rgba(255, 255, 255, 0.25);
+            --glass-shadow: inset 0 1px 0 rgba(255,255,255,0.3), 0 1px 3px rgba(0,0,0,0.06);
             --radius-lg: 28px;
             --radius-sm: 24px;
             --font: 'PingFang SC', 'Microsoft YaHei', 'Helvetica Neue', sans-serif;
@@ -38,24 +21,9 @@
 
         [data-theme="dark"] {
             --text-color: #e8e8e8;
-            --text-shadow: 0 1px 4px rgba(0,0,0,0.7);
-            --glass-bg: rgba(255, 255, 255, 0.02);
-            --glass-border: 1px double rgba(255, 255, 255, 0.08);
-            --glass-shadow: 
-                inset 2px -2px 1px -1px rgba(255, 255, 255, 0.15),
-                inset -2px 2px 1px -1px rgba(255, 255, 255, 0.15),
-                inset 6px -6px 1px -6px rgba(255, 255, 255, 0.08),
-                inset -6px 6px 1px -6px rgba(255, 255, 255, 0.08),
-                inset 0 0 2px rgba(0, 0, 0, 0.9),
-                0 4px 8px rgba(0, 0, 0, 0.4);
-            --glass-shadow-hover: 
-                inset 2px -2px 1px -1px rgba(255, 255, 255, 0.25),
-                inset -2px 2px 1px -1px rgba(255, 255, 255, 0.25),
-                inset 6px -6px 1px -6px rgba(255, 255, 255, 0.12),
-                inset -6px 6px 1px -6px rgba(255, 255, 255, 0.12),
-                inset 0 0 2px rgba(0, 0, 0, 0.95),
-                0 6px 12px rgba(0, 0, 0, 0.5);
-            --glass-brightness: 0.8;
+            --text-shadow: 0 1px 3px rgba(0,0,0,0.7);
+            --glass-border: 1px solid rgba(255, 255, 255, 0.1);
+            --glass-shadow: inset 0 1px 0 rgba(255,255,255,0.05), 0 1px 3px rgba(0,0,0,0.2);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -65,9 +33,7 @@
             line-height: 1.6;
             min-height: 100vh;
             transition: background 0.3s, color 0.3s;
-            position: relative;
             overflow-x: hidden;
-            user-select: none;
             background-color: #F3F3F3;
             background-image:
                 linear-gradient(0deg, transparent 24%, #dbdbdb 25%, #dbdbdb 26%, transparent 27%, transparent 74%, #dbdbdb 75%, #dbdbdb 76%, transparent 77%, transparent),
@@ -80,19 +46,8 @@
             background-image: none;
         }
 
-        /* 视频背景 */
-        .video-bg {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            object-fit: cover;
-            z-index: -1;
-        }
-        .video-bg.hidden { display: none; }
+        .container { max-width: 960px; margin: 0 auto; padding: 0 20px; }
 
-        .container { max-width: 960px; margin: 0 auto; padding: 0 20px; position: relative; z-index: 1; }
-
-        /* 顶部按钮 */
         .top-bar { display: flex; justify-content: flex-end; gap: 12px; padding: 20px 0 0; }
         .top-btn {
             background: var(--glass-bg);
@@ -102,139 +57,32 @@
             font-size: 0.85rem;
             cursor: pointer;
             color: var(--text-color);
-            backdrop-filter: blur(var(--glass-blur));
-            -webkit-backdrop-filter: blur(var(--glass-blur));
-            box-shadow: 
-                inset 1px -1px 1px -1px rgba(255,255,255,0.8),
-                inset -1px 1px 1px -1px rgba(255,255,255,0.8),
-                inset 3px -3px 1px -3px rgba(255,255,255,0.4),
-                inset -3px 3px 1px -3px rgba(255,255,255,0.4),
-                0 2px 4px rgba(0,0,0,0.15);
-            filter: brightness(var(--glass-brightness));
-            transition: all 0.3s ease;
+            box-shadow: var(--glass-shadow);
+            transition: box-shadow 0.2s;
             font-family: inherit;
             text-shadow: var(--text-shadow);
         }
-        .top-btn:hover {
-            box-shadow: 
-                inset 1px -1px 1px -1px rgba(255,255,255,0.9),
-                inset -1px 1px 1px -1px rgba(255,255,255,0.9),
-                inset 3px -3px 1px -3px rgba(255,255,255,0.5),
-                inset -3px 3px 1px -3px rgba(255,255,255,0.5),
-                0 3px 6px rgba(0,0,0,0.2);
-        }
+        .top-btn:hover { box-shadow: inset 0 1px 0 rgba(255,255,255,0.4), 0 2px 4px rgba(0,0,0,0.1); }
 
-        /* 玻璃卡片（大） */
+        /* 轻量玻璃卡片 */
         .glass-card {
-            position: relative;
             background: var(--glass-bg);
             border-radius: var(--radius-lg);
             border: var(--glass-border);
-            backdrop-filter: blur(var(--glass-blur));
-            -webkit-backdrop-filter: blur(var(--glass-blur));
             box-shadow: var(--glass-shadow);
-            filter: brightness(var(--glass-brightness));
-            transition: box-shadow 0.35s ease, border-color 0.35s ease;
-            overflow: hidden;
+            transition: box-shadow 0.2s;
         }
-        .glass-card:hover {
-            box-shadow: var(--glass-shadow-hover);
-        }
-        /* 内部暗色模糊边框 */
-        .glass-card::before {
-            content: '';
-            position: absolute;
-            z-index: 1;
-            top: 8px; left: 8px; right: 8px; bottom: 8px;
-            border-radius: inherit;
-            border: 1px solid rgba(0, 0, 0, 0.85);
-            filter: blur(8px);
-            pointer-events: none;
-        }
-        /* 对角高光 */
-        .glass-card::after {
-            content: '';
-            position: absolute;
-            z-index: 501;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            border-radius: inherit;
-            filter: blur(3px);
-            background: linear-gradient(
-                45deg,
-                rgba(255, 255, 255, 0.8) 0%,
-                transparent var(--glass-highlight-tr),
-                transparent calc(100% - var(--glass-highlight-tr)),
-                rgba(255, 255, 255, 0.8) 100%
-            );
-            pointer-events: none;
-        }
-        /* 内部装饰边框 */
-        .glass-inner {
-            position: absolute;
-            top: 4px; left: 4px; right: 4px; bottom: 4px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: inherit;
-            filter: blur(1px);
-            pointer-events: none;
-            z-index: 2;
-        }
-        .glass-content { position: relative; z-index: 502; }
+        .glass-card:hover { box-shadow: inset 0 1px 0 rgba(255,255,255,0.4), 0 2px 4px rgba(0,0,0,0.1); }
 
-        /* 小玻璃卡片（仓库卡片） */
         .glass-card-sm {
-            position: relative;
             background: var(--glass-bg);
             border-radius: var(--radius-sm);
             border: var(--glass-border);
-            backdrop-filter: blur(var(--glass-blur));
-            -webkit-backdrop-filter: blur(var(--glass-blur));
             box-shadow: var(--glass-shadow);
-            filter: brightness(var(--glass-brightness));
-            transition: box-shadow 0.35s ease;
-            overflow: hidden;
+            transition: box-shadow 0.2s;
         }
-        .glass-card-sm:hover {
-            box-shadow: var(--glass-shadow-hover);
-        }
-        .glass-card-sm::before {
-            content: '';
-            position: absolute;
-            z-index: 1;
-            top: 6px; left: 6px; right: 6px; bottom: 6px;
-            border-radius: inherit;
-            border: 1px solid rgba(0, 0, 0, 0.8);
-            filter: blur(6px);
-            pointer-events: none;
-        }
-        .glass-card-sm::after {
-            content: '';
-            position: absolute;
-            z-index: 501;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            border-radius: inherit;
-            filter: blur(2px);
-            background: linear-gradient(
-                45deg,
-                rgba(255, 255, 255, 0.7) 0%,
-                transparent var(--glass-highlight-tr),
-                transparent calc(100% - var(--glass-highlight-tr)),
-                rgba(255, 255, 255, 0.7) 100%
-            );
-            pointer-events: none;
-        }
-        .glass-inner-sm {
-            position: absolute;
-            top: 3px; left: 3px; right: 3px; bottom: 3px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: inherit;
-            filter: blur(1px);
-            pointer-events: none;
-            z-index: 2;
-        }
+        .glass-card-sm:hover { box-shadow: inset 0 1px 0 rgba(255,255,255,0.4), 0 2px 4px rgba(0,0,0,0.1); }
 
-        /* 介绍区域 */
         .hero { margin: 32px 0; }
         .hero-card {
             padding: 32px;
@@ -246,28 +94,14 @@
         .avatar {
             width: 96px; height: 96px; border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
-            font-size: 2.5rem; font-weight: 500; flex-shrink: 0; overflow: hidden;
-            position: relative; z-index: 502;
-            background: var(--glass-bg);
-            border: var(--glass-border);
-            box-shadow: var(--glass-shadow);
-            filter: brightness(var(--glass-brightness));
-            backdrop-filter: blur(var(--glass-blur));
-            -webkit-backdrop-filter: blur(var(--glass-blur));
-            color: var(--text-color);
+            font-size: 2.5rem; flex-shrink: 0; overflow: hidden;
+            background: var(--glass-bg); border: var(--glass-border);
+            box-shadow: var(--glass-shadow); color: var(--text-color);
         }
         .avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
         .hero-text { flex: 1; min-width: 260px; }
-        .hero-text h1 {
-            font-size: 2rem; font-weight: 600; color: var(--text-color);
-            text-shadow: var(--text-shadow);
-            filter: drop-shadow(0 25px 3px rgba(102,102,102,0.2));
-        }
-        .tagline {
-            font-size: 1rem; opacity: 0.85; margin: 8px 0 16px;
-            text-shadow: var(--text-shadow);
-            filter: drop-shadow(0 25px 3px rgba(102,102,102,0.15));
-        }
+        .hero-text h1 { font-size: 2rem; font-weight: 600; color: var(--text-color); text-shadow: var(--text-shadow); }
+        .tagline { font-size: 1rem; opacity: 0.85; margin: 8px 0 16px; text-shadow: var(--text-shadow); }
         .github-stats { display: flex; flex-wrap: wrap; gap: 18px; margin: 16px 0; font-size: 0.95rem; }
         .github-stat { display: flex; align-items: center; gap: 4px; color: var(--text-color); text-shadow: var(--text-shadow); }
         .stat-number { font-weight: 700; }
@@ -277,11 +111,7 @@
             padding: 8px 18px; border-radius: 30px;
             background: var(--glass-bg); border: var(--glass-border);
             color: var(--text-color); font-size: 0.85rem; font-weight: 500;
-            text-shadow: var(--text-shadow);
-            backdrop-filter: blur(var(--glass-blur));
-            -webkit-backdrop-filter: blur(var(--glass-blur));
-            box-shadow: inset 0 0 0 1px rgba(255,255,255,0.2);
-            filter: drop-shadow(0 25px 3px rgba(102,102,102,0.1));
+            box-shadow: var(--glass-shadow); text-shadow: var(--text-shadow);
         }
         .social-links { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 20px; }
         .social-link {
@@ -289,59 +119,30 @@
             padding: 8px 18px; border-radius: 30px;
             background: var(--glass-bg); border: var(--glass-border);
             color: var(--text-color); text-decoration: none; font-size: 0.85rem;
-            font-weight: 500; transition: all 0.3s ease; text-shadow: var(--text-shadow);
-            backdrop-filter: blur(var(--glass-blur));
-            -webkit-backdrop-filter: blur(var(--glass-blur));
-            box-shadow: inset 0 0 0 1px rgba(255,255,255,0.2);
-            filter: drop-shadow(0 25px 3px rgba(102,102,102,0.15));
+            font-weight: 500; box-shadow: var(--glass-shadow); text-shadow: var(--text-shadow);
+            transition: box-shadow 0.2s;
         }
-        .social-link:hover { filter: drop-shadow(0 25px 5px rgba(102,102,102,0.25)); }
+        .social-link:hover { box-shadow: inset 0 1px 0 rgba(255,255,255,0.4), 0 2px 4px rgba(0,0,0,0.1); }
 
-        /* 快捷入口 */
         .quick-entry { margin: 30px 0; }
         .quick-entry-card {
             display: flex; align-items: center; justify-content: space-between;
             padding: 18px 24px; text-decoration: none; color: inherit;
         }
         .quick-entry-info { display: flex; flex-direction: column; gap: 4px; }
-        .quick-entry-title {
-            font-size: 1.3rem; font-weight: 600; color: var(--text-color);
-            text-shadow: var(--text-shadow);
-            filter: drop-shadow(0 25px 3px rgba(102,102,102,0.2));
-        }
-        .quick-entry-desc {
-            font-size: 0.9rem; opacity: 0.8; text-shadow: var(--text-shadow);
-            filter: drop-shadow(0 25px 3px rgba(102,102,102,0.15));
-        }
+        .quick-entry-title { font-size: 1.3rem; font-weight: 600; color: var(--text-color); text-shadow: var(--text-shadow); }
+        .quick-entry-desc { font-size: 0.9rem; opacity: 0.8; text-shadow: var(--text-shadow); }
         .quick-entry-arrow { font-size: 1.5rem; transition: transform 0.3s ease; }
         .quick-entry-card:hover .quick-entry-arrow { transform: translateX(5px); }
 
-        /* 仓库 */
         .repos-section { margin: 40px 0; }
-        .section-title {
-            font-size: 1.5rem; font-weight: 600; margin-bottom: 20px;
-            color: var(--text-color); text-shadow: var(--text-shadow);
-            filter: drop-shadow(0 25px 3px rgba(102,102,102,0.2));
-        }
+        .section-title { font-size: 1.5rem; font-weight: 600; margin-bottom: 20px; color: var(--text-color); text-shadow: var(--text-shadow); }
         .repos-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
-        .repo-card {
-            padding: 20px; display: flex; flex-direction: column; gap: 12px;
-        }
-        .repo-card > * { position: relative; z-index: 502; }
-        .repo-name {
-            font-size: 1.1rem; font-weight: 600; color: var(--text-color);
-            text-decoration: none;
-            filter: drop-shadow(0 25px 3px rgba(102,102,102,0.2));
-        }
+        .repo-card { padding: 20px; display: flex; flex-direction: column; gap: 12px; }
+        .repo-name { font-size: 1.1rem; font-weight: 600; color: var(--text-color); text-decoration: none; }
         .repo-name:hover { text-decoration: underline; }
-        .repo-desc {
-            font-size: 0.85rem; opacity: 0.8; line-height: 1.5; flex: 1;
-            filter: drop-shadow(0 25px 3px rgba(102,102,102,0.15));
-        }
-        .repo-meta {
-            display: flex; flex-wrap: wrap; gap: 12px; font-size: 0.75rem; opacity: 0.7;
-            filter: drop-shadow(0 25px 3px rgba(102,102,102,0.1));
-        }
+        .repo-desc { font-size: 0.85rem; opacity: 0.8; line-height: 1.5; flex: 1; }
+        .repo-meta { display: flex; flex-wrap: wrap; gap: 12px; font-size: 0.75rem; opacity: 0.7; }
         .language-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
         .site-link { color: inherit; text-decoration: none; font-size: 0.8rem; }
 
@@ -355,11 +156,6 @@
     </style>
 </head>
 <body>
-    <!-- 视频背景：静音、循环、自适应 -->
-    <video class="video-bg" id="bgVideo" autoplay muted loop playsinline>
-        <source src="background.mp4" type="video/mp4">
-    </video>
-
     <div class="container">
         <div class="top-bar">
             <select id="langSelect" class="top-btn">
@@ -371,12 +167,11 @@
 
         <section class="hero">
             <div class="glass-card hero-card">
-                <div class="glass-inner"></div>
                 <div class="avatar">
                     <img src="avatar.png" alt="FoodUI" onerror="this.style.display='none'; document.getElementById('avatarFallback').style.display='flex';">
                     <span id="avatarFallback" style="display:none; width:100%; height:100%; align-items:center; justify-content:center; font-size:2.5rem;">🍜</span>
                 </div>
-                <div class="hero-text glass-content">
+                <div class="hero-text">
                     <h1>FoodUI</h1>
                     <p class="tagline" id="tagline">我的世界玩家，尝试新奇事物</p>
                     <div class="github-stats" id="githubStats">
@@ -399,16 +194,13 @@
         </section>
 
         <section class="quick-entry">
-            <div class="glass-card quick-entry-card">
-                <div class="glass-inner"></div>
-                <a href="https://foodui.github.io/foodhub/" target="_blank" class="glass-content" style="display:flex;align-items:center;justify-content:space-between;width:100%;text-decoration:none;color:inherit;">
-                    <div class="quick-entry-info">
-                        <div class="quick-entry-title">📁 FoodHub</div>
-                        <div class="quick-entry-desc" id="foodhubDesc">配置文件与网盘资源分享站</div>
-                    </div>
-                    <span class="quick-entry-arrow">→</span>
-                </a>
-            </div>
+            <a href="https://foodui.github.io/foodhub/" target="_blank" class="glass-card quick-entry-card">
+                <div class="quick-entry-info">
+                    <div class="quick-entry-title">📁 FoodHub</div>
+                    <div class="quick-entry-desc" id="foodhubDesc">配置文件与网盘资源分享站</div>
+                </div>
+                <span class="quick-entry-arrow">→</span>
+            </a>
         </section>
 
         <section class="repos-section">
@@ -546,7 +338,6 @@
                 }[repo.language] || '#858585';
                 return `
                 <div class="glass-card-sm repo-card">
-                    <div class="glass-inner-sm"></div>
                     <div style="display: flex; align-items: center; justify-content: space-between;">
                         <a href="${repo.html_url}" target="_blank" class="repo-name">📁 ${repo.name}</a>
                         ${siteIcon}
@@ -560,23 +351,6 @@
                     </div>
                 </div>`;
             }).join('');
-        }
-
-        // 视频背景加载处理
-        const video = document.getElementById('bgVideo');
-        if (video) {
-            video.addEventListener('loadeddata', () => {
-                if (video.videoWidth > 0 && video.videoHeight > 0) video.classList.remove('hidden');
-                else video.classList.add('hidden');
-            });
-            video.addEventListener('error', () => video.classList.add('hidden'));
-            if (video.readyState >= 2 && (video.videoWidth === 0 && video.videoHeight === 0)) {
-                video.classList.add('hidden');
-            } else {
-                setTimeout(() => {
-                    if (video.readyState < 2 || (video.videoWidth === 0 && video.videoHeight === 0)) video.classList.add('hidden');
-                }, 3000);
-            }
         }
 
         applyLang();
